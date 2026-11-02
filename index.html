@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Portfolio of Xiangqi Chen: data analytics projects with SQL, Python, Tableau and Power BI. NUS MSc Industrial &amp; Systems Engineering (Data Analytics).">
+<title>Xiangqi Chen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a drawing sheet. Faint drafting grid behind the opener, sections hung on lettered
+   grid-line bubbles down the left edge, a title block as the footer. */
+:root {
+  --paper: #f4f6f5;        /* tracing-paper white, faint green-grey */
+  --sheet: #ffffff;
+  --ink: #1c2226;
+  --ink-soft: #4d575d;
+  --line: #d3d9d8;
+  --grid: rgba(28, 34, 38, 0.055);
+  --accent: #23578a;       /* survey blue */
+  --accent-soft: rgba(35, 87, 138, 0.09);
+  --mark: #c2410c;         /* redline, used once per figure */
+
+  --f-display: "Archivo", "Arial Narrow", Arial, sans-serif;
+  --f-body: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+
+  --step--1: 0.8rem;
+  --step-0: 1rem;
+  --step-1: 1.2rem;
+  --step-2: 1.55rem;
+  --step-3: clamp(2.4rem, 7vw, 4.6rem);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #12171a; --sheet: #192024; --ink: #e4e9ea; --ink-soft: #9aa6ab; --line: #2c3539;
+    --grid: rgba(228, 233, 234, 0.05); --accent: #7fb2e0; --accent-soft: rgba(127, 178, 224, 0.12);
+    --mark: #f08a5d; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #12171a; --sheet: #192024; --ink: #e4e9ea; --ink-soft: #9aa6ab; --line: #2c3539;
+  --grid: rgba(228, 233, 234, 0.05); --accent: #7fb2e0; --accent-soft: rgba(127, 178, 224, 0.12);
+  --mark: #f08a5d; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: 17px;
+  line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; margin: 0; }
+p { margin: 0; }
+.wrap { max-width: 1060px; margin: 0 auto; }
+
+/* ---------- opener ---------- */
+.opener {
+  position: relative;
+  padding-block: 56px 48px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 220px;
+  gap: 40px;
+  align-items: end;
+}
+.opener::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 24px 24px;
+  -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent);
+  mask-image: linear-gradient(to bottom, #000 55%, transparent);
+  pointer-events: none;
+  z-index: 0;
+}
+.opener > * { position: relative; z-index: 1; min-width: 0; }
+.eyebrow {
+  font-family: var(--f-mono);
+  font-size: var(--step--1);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.name {
+  font-size: var(--step-3);
+  font-weight: 800;
+  font-stretch: 118%;
+  line-height: 0.98;
+  letter-spacing: -0.01em;
+  margin-block: 14px 18px;
+}
+.name .cn { font-family: var(--f-body); font-weight: 400; font-stretch: normal; font-size: 0.42em; color: var(--ink-soft); letter-spacing: 0.1em; margin-left: 0.3em; vertical-align: 0.5em; }
+.lede { font-size: var(--step-1); max-width: 34em; }
+.lede strong { font-weight: 600; }
+.status {
+  margin-top: 22px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--f-mono);
+  font-size: 0.84rem;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  padding: 6px 12px;
+}
+.status::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+.links { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 22px; font-family: var(--f-display); font-weight: 600; font-stretch: 90%; }
+
+/* photo with a drafting dimension line */
+.portrait { display: grid; gap: 8px; }
+.portrait img { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; display: block; border: 1px solid var(--line); background: var(--sheet); }
+.dim { display: grid; grid-template-columns: auto 1fr auto 1fr auto; align-items: center; gap: 6px; font-family: var(--f-mono); font-size: 0.72rem; color: var(--ink-soft); }
+.dim i { height: 9px; border-left: 1px solid var(--ink-soft); }
+.dim b { height: 1px; background: var(--ink-soft); font-weight: 400; }
+
+/* ---------- sections on grid lines ---------- */
+.section {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr);
+  gap: 0 20px;
+  padding-block: 44px;
+  border-top: 1px solid var(--line);
+}
+.axis { position: relative; display: flex; justify-content: center; }
+.axis::after { content: ""; position: absolute; top: 44px; bottom: -44px; left: 50%; border-left: 1px dashed var(--line); }
+.bubble {
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 1.5px solid var(--ink);
+  display: grid; place-items: center;
+  font-family: var(--f-mono); font-weight: 500; font-size: 0.95rem;
+  background: var(--paper);
+  position: relative; z-index: 1;
+}
+.section h2 { font-size: var(--step-2); font-weight: 700; font-stretch: 105%; line-height: 1.2; }
+.section .kicker { color: var(--ink-soft); margin-top: 6px; max-width: 40em; }
+.body { min-width: 0; }
+
+/* ---------- projects ---------- */
+.projects { display: grid; gap: 28px; margin-top: 28px; }
+.project { background: var(--sheet); border: 1px solid var(--line); }
+.project-head { padding: 24px 26px 0; display: grid; gap: 6px; }
+.project h3 { font-size: var(--step-1); font-weight: 700; font-stretch: 100%; line-height: 1.3; }
+.meta { font-family: var(--f-mono); font-size: var(--step--1); color: var(--ink-soft); display: flex; flex-wrap: wrap; gap: 4px 14px; }
+.figures {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 20px 26px 0;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--line);
+}
+.fig { padding: 12px 14px 14px 0; display: grid; gap: 2px; }
+.fig + .fig { padding-left: 14px; border-left: 1px solid var(--line); }
+.fig .v { font-family: var(--f-display); font-weight: 700; font-stretch: 112%; font-size: 1.75rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.fig .v.hot { color: var(--mark); }
+.fig .k { font-size: 0.82rem; color: var(--ink-soft); line-height: 1.35; }
+.project-body { padding: 18px 26px 24px; display: grid; gap: 16px; }
+.steps { display: grid; grid-template-columns: 104px minmax(0, 1fr); gap: 10px 18px; margin: 0; }
+.steps dt { font-family: var(--f-mono); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); padding-top: 3px; }
+.steps dd { margin: 0; max-width: 62ch; }
+.shot { margin: 4px 0 0; border: 1px solid var(--line); }
+.shot img { display: block; width: 100%; height: auto; }
+.shot figcaption { font-family: var(--f-mono); font-size: 0.75rem; color: var(--ink-soft); padding: 8px 12px; border-top: 1px solid var(--line); }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag { font-family: var(--f-mono); font-size: 0.76rem; padding: 2px 8px; background: var(--accent-soft); color: var(--ink); }
+.project-links { display: flex; flex-wrap: wrap; gap: 8px 20px; font-family: var(--f-display); font-weight: 600; font-stretch: 90%; }
+
+/* ---------- story ---------- */
+.story { margin-top: 18px; display: grid; gap: 14px; max-width: 64ch; }
+
+/* ---------- experience / education ---------- */
+.rows { margin-top: 22px; display: grid; }
+.row { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 4px 24px; padding-block: 16px; border-top: 1px solid var(--line); }
+.row:last-child { border-bottom: 1px solid var(--line); }
+.when { font-family: var(--f-mono); font-size: 0.82rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; padding-top: 3px; }
+.what h3 { font-size: 1.05rem; font-weight: 700; font-stretch: 100%; }
+.what .org { color: var(--ink-soft); font-size: 0.95rem; }
+.what p { margin-top: 6px; max-width: 64ch; }
+
+/* ---------- skills ---------- */
+.skills { margin-top: 22px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 32px; }
+.skill { padding-block: 14px; border-top: 1px solid var(--line); }
+.skill h3 { font-family: var(--f-mono); font-size: 0.78rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; color: var(--accent); }
+.skill p { margin-top: 4px; }
+
+/* ---------- contact ---------- */
+.contact { margin-top: 20px; display: grid; gap: 12px; }
+.email { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+.email code { font-family: var(--f-mono); font-size: 1.05rem; user-select: all; overflow-wrap: anywhere; }
+.copy {
+  font-family: var(--f-mono); font-size: 0.8rem;
+  border: 1px solid var(--ink); background: transparent; color: var(--ink);
+  padding: 5px 12px; cursor: pointer;
+}
+.copy:hover { background: var(--ink); color: var(--paper); }
+
+/* ---------- title block footer ---------- */
+.titleblock {
+  margin-block: 56px 40px;
+  border: 1.5px solid var(--ink);
+  display: grid;
+  grid-template-columns: 2fr repeat(4, minmax(0, 1fr));
+  font-family: var(--f-mono);
+  font-size: 0.76rem;
+}
+.titleblock div { padding: 8px 12px; border-left: 1px solid var(--ink); min-width: 0; }
+.titleblock div:first-child { border-left: 0; }
+.titleblock span { display: block; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.66rem; }
+
+@media (max-width: 760px) {
+  body { font-size: 16px; }
+  .opener { grid-template-columns: minmax(0, 1fr); padding-block: 36px 32px; gap: 28px; }
+  .portrait { max-width: 180px; order: -1; }
+  .section { grid-template-columns: minmax(0, 1fr); padding-block: 32px; }
+  .axis { justify-content: flex-start; margin-bottom: 14px; }
+  .axis::after { display: none; }
+  .figures { grid-template-columns: minmax(0, 1fr); margin-inline: 18px; }
+  .fig + .fig { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); }
+  .project-head, .project-body { padding-inline: 18px; }
+  .steps { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+  .steps dd { margin-bottom: 10px; }
+  .row { grid-template-columns: minmax(0, 1fr); }
+  .skills { grid-template-columns: minmax(0, 1fr); }
+  .titleblock { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .titleblock div { border-left: 0; border-top: 1px solid var(--ink); }
+  .titleblock div:first-child { grid-column: 1 / -1; border-top: 0; }
+  .titleblock div:nth-child(odd):not(:first-child) { border-left: 1px solid var(--ink); }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+</style>
+<style>body{margin:0}img{max-width:100%}</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="opener">
+    <div>
+      <p class="eyebrow">Data analytics · Operations · Supply chain</p>
+      <h1 class="name">Xiangqi Chen<span class="cn">陈湘绮</span></h1>
+      <p class="lede">I trained as an architect at Zhejiang University and now study <strong>Industrial &amp; Systems Engineering (Data Analytics)</strong> at the National University of Singapore. I like questions that can be answered with data: where a process slows down, which customers matter most, and what to do about it.</p>
+      <p class="status">Open to internships · Jan–Jun 2027 · Singapore</p>
+      <nav class="links" aria-label="Profiles">
+        <a href="https://www.linkedin.com/in/xiangqi-chen/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com/chenxiangqi03-dot" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://public.tableau.com/app/profile/xiangqi.chen" target="_blank" rel="noopener">Tableau Public</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+    <div class="portrait">
+      <img src="photo.jpg" alt="Portrait of Xiangqi Chen" width="440" height="550">
+      <div class="dim" aria-hidden="true"><i></i><b></b><span>SCALE 1:1</span><b></b><i></i></div>
+    </div>
+  </header>
+
+  <!-- A: projects -->
+  <section class="section" id="projects" aria-labelledby="h-projects">
+    <div class="axis"><span class="bubble">A</span></div>
+    <div class="body">
+      <h2 id="h-projects">Projects</h2>
+      <p class="kicker">Two end-to-end analyses, from raw data to recommendations.</p>
+
+      <div class="projects">
+
+        <article class="project">
+          <div class="project-head">
+            <h3>Where and when do e-commerce deliveries run late?</h3>
+            <div class="meta"><span>Olist, Brazil · 2016–2018 data</span><span>Personal project · Oct–Nov 2026</span></div>
+          </div>
+          <div class="figures">
+            <div class="fig"><span class="v">96,470</span><span class="k">delivered orders analysed across 9 linked tables</span></div>
+            <div class="fig"><span class="v hot">6.77%</span><span class="k">arrived after the promised date</span></div>
+            <div class="fig"><span class="v">2.27 <small style="font-size:0.55em;font-weight:500">vs</small> 4.29</span><span class="k">average review stars, late vs on-time orders</span></div>
+          </div>
+          <div class="project-body">
+            <dl class="steps">
+              <dt>Built</dt>
+              <dd>A MySQL database of 1.5M+ rows with keys and foreign keys, loaded with Python. Fixed data-quality problems on the way: non-unique review IDs, zip codes that lost their leading zeros, and products with no category.</dd>
+              <dt>Analysed</dt>
+              <dd>Late rate by state, product category and month with multi-table JOINs, CTEs and window functions (LAG for month-over-month change).</dd>
+              <dt>Found</dt>
+              <dd>Region matters most. Rio de Janeiro, the second-largest market, runs at 12.1% late against São Paulo's 4.5%. Late rates spike at Black Friday (12.4%) and peak in March 2018 (19.0%).</dd>
+              <dt>Recommended</dt>
+              <dd>Region-specific delivery promises for remote states, carrier review for Rio de Janeiro, and logistics capacity planning before peak periods.</dd>
+            </dl>
+            <figure class="shot">
+              <img src="dashboard.jpg" alt="Tableau dashboard showing KPI cards, late rate by Brazilian state on a map, the top 10 product categories by late rate, and monthly late rate against order volume" width="1600" height="1200" loading="lazy">
+              <figcaption>Interactive Tableau dashboard. Clicking a state filters the KPIs and the monthly trend.</figcaption>
+            </figure>
+            <div class="tags"><span class="tag">MySQL</span><span class="tag">Python</span><span class="tag">Tableau</span><span class="tag">CTEs</span><span class="tag">Window functions</span></div>
+            <div class="project-links">
+              <a href="https://public.tableau.com/app/profile/xiangqi.chen/viz/OlistDeliveryPerformanceDashboard_17936172935180/OlistDeliveryPerformance20172018" target="_blank" rel="noopener">Open the dashboard</a>
+              <a href="https://github.com/chenxiangqi03-dot/olist-delivery-analysis" target="_blank" rel="noopener">SQL code and write-up on GitHub</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project">
+          <div class="project-head">
+            <h3>Which customers, products and markets should an online retailer prioritise?</h3>
+            <div class="meta"><span>UK online retailer · Dec 2010–Dec 2011 data</span><span>NUS IE5005 course project · Oct 2026</span></div>
+          </div>
+          <div class="figures">
+            <div class="fig"><span class="v">541,909</span><span class="k">transaction rows audited and cleaned</span></div>
+            <div class="fig"><span class="v hot">29.2%</span><span class="k">of customers (Champions) bring in 76.5% of identified-customer revenue</span></div>
+            <div class="fig"><span class="v">13.5%</span><span class="k">of orders cancelled, reversing £478,724</span></div>
+          </div>
+          <div class="project-body">
+            <dl class="steps">
+              <dt>Cleaned</dt>
+              <dd>Found six data-quality issues, including cancellations, returns, non-product codes and 24.9% missing customer IDs, and logged a decision for each one rather than deleting rows silently.</dd>
+              <dt>Analysed</dt>
+              <dd>RFM segmentation of 4,335 customers in pandas, plus Pareto, scatter, distribution and trend charts in Power BI.</dd>
+              <dt>Found</dt>
+              <dd>Champions and Loyal customers are 58.5% of customers but 92.0% of revenue. EIRE and Germany earn £34.84 and £23.74 per transaction line, against £18.03 in the UK.</dd>
+              <dt>Recommended</dt>
+              <dd>A loyalty programme for top segments, a low-cost automated win-back campaign for lapsed customers, and EIRE and Germany as the first markets outside the UK.</dd>
+            </dl>
+            <div class="tags"><span class="tag">Python</span><span class="tag">pandas</span><span class="tag">Power BI</span><span class="tag">RFM segmentation</span><span class="tag">Data cleaning</span></div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- B: background story -->
+  <section class="section" id="story" aria-labelledby="h-story">
+    <div class="axis"><span class="bubble">B</span></div>
+    <div class="body">
+      <h2 id="h-story">From floor plans to data</h2>
+      <div class="story">
+        <p>At a design institute I spent much of my time on the numbers behind a building: floor area ratio, building density, green ratio and parking provision. I built Excel sheets to calculate and cross-check more than 20 of these indicators across design schemes, and checked them against planning regulations.</p>
+        <p>That work taught me to read a drawing as a dataset and to care about whether the figures are right. I moved into data analytics to do that kind of checking and comparing at a larger scale, and I bring an architect's habits with me: attention to detail, clear visual communication, and comfort with presenting to clients.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- C: experience -->
+  <section class="section" id="experience" aria-labelledby="h-exp">
+    <div class="axis"><span class="bubble">C</span></div>
+    <div class="body">
+      <h2 id="h-exp">Experience</h2>
+      <div class="rows">
+        <div class="row">
+          <span class="when">2025.08 – 2025.11</span>
+          <div class="what">
+            <h3>Architectural Design Intern</h3>
+            <span class="org">Zhejiang Urban &amp; Rural Planning Design Institute</span>
+            <p>Built tracking sheets for 20+ technical-economic indicators across design schemes, validated scheme data against government planning conditions, and ran floor-by-floor checks on drawing data for a commercial complex. Worked on 4 live projects, including an international design competition.</p>
+          </div>
+        </div>
+        <div class="row">
+          <span class="when">2025.06 – 2025.07</span>
+          <div class="what">
+            <h3>Construction Site Intern</h3>
+            <span class="org">Zhejiang University Architectural Design &amp; Research Institute</span>
+            <p>Collected field data on construction progress, materials and structural methods at active sites, including the VIVO Global AI R&amp;D Center, and wrote it up in a 3,000+ word report.</p>
+          </div>
+        </div>
+        <div class="row">
+          <span class="when">2025.01 – 2025.02</span>
+          <div class="what">
+            <h3>New Media Operations Intern</h3>
+            <span class="org">Hangzhou Phoenix Career Education Technology</span>
+            <p>Produced posters, slide decks and WeChat articles on a regular schedule, and saw how content performance data shaped what the team published next.</p>
+          </div>
+        </div>
+        <div class="row">
+          <span class="when">2024.07 – 2024.08</span>
+          <div class="what">
+            <h3>Architectural Design Intern</h3>
+            <span class="org">Zhejiang Urban &amp; Rural Planning Design Institute</span>
+            <p>Supported scheme drafting in AutoCAD, SketchUp and Photoshop and kept the project's baseline data records.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- D: education -->
+  <section class="section" id="education" aria-labelledby="h-edu">
+    <div class="axis"><span class="bubble">D</span></div>
+    <div class="body">
+      <h2 id="h-edu">Education</h2>
+      <div class="rows">
+        <div class="row">
+          <span class="when">2026.08 – 2028.03</span>
+          <div class="what">
+            <h3>MSc Industrial &amp; Systems Engineering, Data Analytics track</h3>
+            <span class="org">National University of Singapore</span>
+            <p>Data Analytics for Industrial Engineers, Applied Programming for Industrial Systems (Python), Decision Analysis, Stochastic Models, Nonlinear Optimization.</p>
+          </div>
+        </div>
+        <div class="row">
+          <span class="when">2021.09 – 2026.06</span>
+          <div class="what">
+            <h3>Bachelor of Architecture</h3>
+            <span class="org">Zhejiang University</span>
+            <p>GPA 3.77 / 4.0 (3.85 over the last three years). Coursework included Engineering Economy and Management, Python Programming, Statistics and Linear Algebra.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- E: skills -->
+  <section class="section" id="skills" aria-labelledby="h-skills">
+    <div class="axis"><span class="bubble">E</span></div>
+    <div class="body">
+      <h2 id="h-skills">Skills</h2>
+      <div class="skills">
+        <div class="skill"><h3>Data &amp; analysis</h3><p>SQL (MySQL): joins, CTEs, window functions. Python: pandas, Matplotlib. Excel.</p></div>
+        <div class="skill"><h3>Visualisation</h3><p>Tableau, Power BI, dashboards and presentation design.</p></div>
+        <div class="skill"><h3>Modelling</h3><p>Decision analysis (decision trees, expected value, EVPI), stochastic models, optimisation.</p></div>
+        <div class="skill"><h3>Design tools</h3><p>AutoCAD, SketchUp, Photoshop, PowerPoint.</p></div>
+        <div class="skill"><h3>Languages</h3><p>Mandarin (native), English (IELTS 6.5).</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- F: contact -->
+  <section class="section" id="contact" aria-labelledby="h-contact">
+    <div class="axis"><span class="bubble">F</span></div>
+    <div class="body">
+      <h2 id="h-contact">Contact</h2>
+      <p class="kicker">I'm looking for a six-month data analytics, operations or supply chain internship from January 2027. It can be registered as a credit-bearing NUS internship.</p>
+      <div class="contact">
+        <div class="email">
+          <code id="email-addr">chenxiangqi03@gmail.com</code>
+          <button class="copy" id="copy-email" type="button">Copy email</button>
+        </div>
+        <div class="links" style="margin-top:4px">
+          <a href="https://www.linkedin.com/in/xiangqi-chen/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://github.com/chenxiangqi03-dot" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://public.tableau.com/app/profile/xiangqi.chen" target="_blank" rel="noopener">Tableau Public</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="titleblock" aria-label="Page details">
+    <div><span>Project</span>Portfolio of Xiangqi Chen</div>
+    <div><span>Drawn by</span>X. Chen</div>
+    <div><span>Location</span>Singapore</div>
+    <div><span>Date</span>2026.11</div>
+    <div><span>Sheet</span>01 of 01</div>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  var btn = document.getElementById('copy-email');
+  var addr = document.getElementById('email-addr');
+  btn.addEventListener('click', function () {
+    var text = addr.textContent;
+    function selectIt() {
+      var r = document.createRange(); r.selectNodeContents(addr);
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      btn.textContent = 'Selected, press Ctrl+C';
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { btn.textContent = 'Copied'; }, selectIt);
+    } else { selectIt(); }
+    setTimeout(function () { btn.textContent = 'Copy email'; }, 2500);
+  });
+})();
+</script>
+</body>
+</html>
