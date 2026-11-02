@@ -3,544 +3,899 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Portfolio of Xiangqi Chen: data analytics projects with SQL, Python, Tableau and Power BI. NUS MSc Industrial &amp; Systems Engineering (Data Analytics).">
+<meta name="description" content="Portfolio of Xiangqi Chen: data analytics case studies with SQL, Python, Tableau and Power BI. NUS MSc Industrial &amp; Systems Engineering (Data Analytics).">
+<meta property="og:title" content="Xiangqi Chen · Data Analytics Portfolio">
+<meta property="og:description" content="Interactive case studies: e-commerce delivery delays (SQL, Tableau) and retail customer segmentation (pandas, Power BI).">
+<meta property="og:image" content="https://chenxiangqi03-dot.github.io/dashboard.jpg">
 <title>Xiangqi Chen</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@500&display=swap">
 <style>
-/* Layout: a drawing sheet. Faint drafting grid behind the opener, sections hung on lettered
-   grid-line bubbles down the left edge, a title block as the footer. */
+/* Layout: corporate elegance, data-driven. One misty-blue hue in Morandi tints over a watercolor wash;
+   content sits on layered translucent cards; a glass nav floats on top. Approachable luxury: wide margins,
+   soft hovers, 20px radii, one handwritten line. */
 :root {
-  --paper: #f4f6f5;        /* tracing-paper white, faint green-grey */
-  --sheet: #ffffff;
-  --ink: #1c2226;
-  --ink-soft: #4d575d;
-  --line: #d3d9d8;
-  --grid: rgba(28, 34, 38, 0.055);
-  --accent: #23578a;       /* survey blue */
-  --accent-soft: rgba(35, 87, 138, 0.09);
-  --mark: #c2410c;         /* redline, used once per figure */
+  /* monochromatic Morandi blue-grey, from wash to ink */
+  --wash-1: #e9eef1;
+  --wash-2: #dbe4ea;
+  --wash-3: #c5d2db;
+  --hue-4: #9fb2c0;
+  --hue-5: #7891a3;
+  --hue-6: #56718a;
+  --hue-7: #3e566b;
+  --ink: #26333f;
+  --ink-soft: #5b6a77;
+  --ink-faint: #8796a2;
 
-  --f-display: "Archivo", "Arial Narrow", Arial, sans-serif;
-  --f-body: "Source Serif 4", Georgia, "Times New Roman", serif;
-  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  --bg: #eef2f4;
+  --card: rgba(255, 255, 255, 0.72);
+  --card-solid: #fbfcfd;
+  --card-tint: rgba(219, 228, 234, 0.55);
+  --line: rgba(62, 86, 107, 0.13);
+  --line-strong: rgba(62, 86, 107, 0.28);
+  --glass: rgba(246, 249, 250, 0.62);
+  --shadow-1: 0 1px 2px rgba(38, 51, 63, 0.05), 0 8px 24px -14px rgba(38, 51, 63, 0.22);
+  --shadow-2: 0 2px 4px rgba(38, 51, 63, 0.05), 0 22px 48px -20px rgba(38, 51, 63, 0.32);
+  --blob-a: rgba(159, 178, 192, 0.55);
+  --blob-b: rgba(197, 210, 219, 0.75);
+  --blob-c: rgba(120, 145, 163, 0.30);
 
-  --step--1: 0.8rem;
-  --step-0: 1rem;
-  --step-1: 1.2rem;
-  --step-2: 1.55rem;
-  --step-3: clamp(2.4rem, 7vw, 4.6rem);
+  --f-display: "Newsreader", "Iowan Old Style", Georgia, serif;
+  --f-body: "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+  --f-hand: "Caveat", "Segoe Print", "Bradley Hand", cursive;
+
+  --r-lg: 22px;
+  --r-md: 16px;
+  --r-sm: 10px;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --paper: #12171a; --sheet: #192024; --ink: #e4e9ea; --ink-soft: #9aa6ab; --line: #2c3539;
-    --grid: rgba(228, 233, 234, 0.05); --accent: #7fb2e0; --accent-soft: rgba(127, 178, 224, 0.12);
-    --mark: #f08a5d; color-scheme: dark;
+    --wash-1: #1d242a; --wash-2: #243039; --wash-3: #2f3e4a; --hue-4: #4c6276; --hue-5: #6f889c; --hue-6: #93aabd; --hue-7: #b9cad7;
+    --ink: #e4eaee; --ink-soft: #a7b4be; --ink-faint: #7d8b96;
+    --bg: #151b20; --card: rgba(32, 41, 49, 0.72); --card-solid: #1d252c; --card-tint: rgba(47, 62, 74, 0.5);
+    --line: rgba(185, 202, 215, 0.12); --line-strong: rgba(185, 202, 215, 0.26); --glass: rgba(24, 31, 37, 0.66);
+    --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px -14px rgba(0, 0, 0, 0.6);
+    --shadow-2: 0 2px 4px rgba(0, 0, 0, 0.3), 0 22px 48px -20px rgba(0, 0, 0, 0.7);
+    --blob-a: rgba(76, 98, 118, 0.45); --blob-b: rgba(47, 62, 74, 0.7); --blob-c: rgba(111, 136, 156, 0.22);
+    color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --paper: #12171a; --sheet: #192024; --ink: #e4e9ea; --ink-soft: #9aa6ab; --line: #2c3539;
-  --grid: rgba(228, 233, 234, 0.05); --accent: #7fb2e0; --accent-soft: rgba(127, 178, 224, 0.12);
-  --mark: #f08a5d; color-scheme: dark;
+  --wash-1: #1d242a; --wash-2: #243039; --wash-3: #2f3e4a; --hue-4: #4c6276; --hue-5: #6f889c; --hue-6: #93aabd; --hue-7: #b9cad7;
+  --ink: #e4eaee; --ink-soft: #a7b4be; --ink-faint: #7d8b96;
+  --bg: #151b20; --card: rgba(32, 41, 49, 0.72); --card-solid: #1d252c; --card-tint: rgba(47, 62, 74, 0.5);
+  --line: rgba(185, 202, 215, 0.12); --line-strong: rgba(185, 202, 215, 0.26); --glass: rgba(24, 31, 37, 0.66);
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px -14px rgba(0, 0, 0, 0.6);
+  --shadow-2: 0 2px 4px rgba(0, 0, 0, 0.3), 0 22px 48px -20px rgba(0, 0, 0, 0.7);
+  --blob-a: rgba(76, 98, 118, 0.45); --blob-b: rgba(47, 62, 74, 0.7); --blob-c: rgba(111, 136, 156, 0.22);
+  color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 96px; }
 body {
-  background: var(--paper);
+  margin: 0;
+  background: var(--bg);
   color: var(--ink);
   font-family: var(--f-body);
-  font-size: 17px;
-  line-height: 1.6;
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
   padding-left: max(16px, env(safe-area-inset-left, 0px));
   padding-right: max(16px, env(safe-area-inset-right, 0px));
+  overflow-x: clip;
 }
-a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
-a:hover { text-decoration-thickness: 2px; }
-a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
-h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; margin: 0; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--bg); }
+
+/* watercolor wash: three soft blobs and a paper grain, fixed behind everything */
+.wash { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
+.wash i { position: absolute; border-radius: 50%; filter: blur(70px); }
+.wash i:nth-child(1) { width: 52vmax; height: 40vmax; left: -14vmax; top: -12vmax; background: var(--blob-b); }
+.wash i:nth-child(2) { width: 40vmax; height: 34vmax; right: -12vmax; top: 18vh; background: var(--blob-a); }
+.wash i:nth-child(3) { width: 46vmax; height: 30vmax; left: 18vw; bottom: -16vmax; background: var(--blob-c); }
+.wash::after {
+  content: ""; position: absolute; inset: 0; opacity: 0.35; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.3 0 0 0 0 0.36 0 0 0 0 0.42 0 0 0 0.09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+a { color: var(--hue-6); text-decoration: none; }
+a:focus-visible, button:focus-visible, [role="tab"]:focus-visible { outline: 2px solid var(--hue-6); outline-offset: 3px; border-radius: 8px; }
+h1, h2, h3 { margin: 0; text-wrap: balance; font-weight: 500; }
 p { margin: 0; }
-.wrap { max-width: 1060px; margin: 0 auto; }
+.wrap { max-width: 1120px; margin: 0 auto; }
 
-/* ---------- opener ---------- */
-.opener {
-  position: relative;
-  padding-block: 56px 48px;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 220px;
-  gap: 40px;
-  align-items: end;
+/* ---------- glass nav ---------- */
+.nav {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+  margin: 14px auto 0; max-width: 1120px;
+  display: flex; align-items: center; gap: 18px;
+  padding: 10px 12px 10px 18px;
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2); backdrop-filter: blur(16px) saturate(1.2);
+  border: 1px solid var(--line); border-radius: 999px; box-shadow: var(--shadow-1);
 }
-.opener::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(var(--grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-  background-size: 24px 24px;
-  -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent);
-  mask-image: linear-gradient(to bottom, #000 55%, transparent);
-  pointer-events: none;
-  z-index: 0;
-}
-.opener > * { position: relative; z-index: 1; min-width: 0; }
-.eyebrow {
-  font-family: var(--f-mono);
-  font-size: var(--step--1);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-}
-.name {
-  font-size: var(--step-3);
-  font-weight: 800;
-  font-stretch: 118%;
-  line-height: 0.98;
-  letter-spacing: -0.01em;
-  margin-block: 14px 18px;
-}
-.name .cn { font-family: var(--f-body); font-weight: 400; font-stretch: normal; font-size: 0.42em; color: var(--ink-soft); letter-spacing: 0.1em; margin-left: 0.3em; vertical-align: 0.5em; }
-.lede { font-size: var(--step-1); max-width: 34em; }
-.lede strong { font-weight: 600; }
-.status {
-  margin-top: 22px;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font-family: var(--f-mono);
-  font-size: 0.84rem;
-  border: 1px solid var(--accent);
-  color: var(--accent);
-  padding: 6px 12px;
-}
-.status::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
-.links { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 22px; font-family: var(--f-display); font-weight: 600; font-stretch: 90%; }
+.mono { font-family: var(--f-display); font-size: 1.25rem; font-style: italic; color: var(--ink); letter-spacing: 0.02em; white-space: nowrap; }
+.nav-links { display: flex; gap: 2px; margin-left: auto; overflow-x: auto; scrollbar-width: none; }
+.nav-links::-webkit-scrollbar { display: none; }
+.nav-links a { color: var(--ink-soft); font-size: 0.86rem; font-weight: 500; padding: 7px 13px; border-radius: 999px; white-space: nowrap; transition: background 0.25s, color 0.25s; }
+.nav-links a:hover { color: var(--ink); background: var(--card-tint); }
+.nav-links a.active { color: var(--ink); background: var(--card-solid); box-shadow: var(--shadow-1); }
+.avail { display: inline-flex; align-items: center; gap: 8px; font-size: 0.8rem; font-weight: 600; color: var(--hue-7); background: var(--wash-2); padding: 7px 14px; border-radius: 999px; white-space: nowrap; }
+.avail::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--hue-6); box-shadow: 0 0 0 4px var(--wash-3); }
 
-/* photo with a drafting dimension line */
-.portrait { display: grid; gap: 8px; }
-.portrait img { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; display: block; border: 1px solid var(--line); background: var(--sheet); }
-.dim { display: grid; grid-template-columns: auto 1fr auto 1fr auto; align-items: center; gap: 6px; font-family: var(--f-mono); font-size: 0.72rem; color: var(--ink-soft); }
-.dim i { height: 9px; border-left: 1px solid var(--ink-soft); }
-.dim b { height: 1px; background: var(--ink-soft); font-weight: 400; }
-
-/* ---------- sections on grid lines ---------- */
-.section {
-  display: grid;
-  grid-template-columns: 56px minmax(0, 1fr);
-  gap: 0 20px;
-  padding-block: 44px;
-  border-top: 1px solid var(--line);
+/* ---------- shared card ---------- */
+.card {
+  background: var(--card);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-1);
 }
-.axis { position: relative; display: flex; justify-content: center; }
-.axis::after { content: ""; position: absolute; top: 44px; bottom: -44px; left: 50%; border-left: 1px dashed var(--line); }
-.bubble {
-  width: 40px; height: 40px; border-radius: 50%;
-  border: 1.5px solid var(--ink);
-  display: grid; place-items: center;
-  font-family: var(--f-mono); font-weight: 500; font-size: 0.95rem;
-  background: var(--paper);
-  position: relative; z-index: 1;
+.lift { transition: transform 0.35s cubic-bezier(.2,.7,.2,1), box-shadow 0.35s; }
+.lift:hover { transform: translateY(-3px); box-shadow: var(--shadow-2); }
+.eyebrow { font-family: var(--f-mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--hue-5); }
+
+/* ---------- hero ---------- */
+.hero { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 28px; padding-block: 56px 28px; align-items: stretch; }
+.hero-main { padding: 44px 44px 40px; display: flex; flex-direction: column; gap: 22px; }
+.hero h1 { font-family: var(--f-display); font-size: clamp(2.8rem, 6.4vw, 4.6rem); line-height: 0.98; letter-spacing: -0.02em; }
+.hero h1 em { font-style: italic; color: var(--hue-6); }
+.hero .cn { display: block; font-family: var(--f-body); font-size: 0.9rem; letter-spacing: 0.4em; color: var(--ink-faint); margin-top: 14px; }
+.lede { font-size: 1.12rem; color: var(--ink-soft); max-width: 36em; }
+.lede strong { color: var(--ink); font-weight: 600; }
+.cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+.btn {
+  font: 600 0.9rem var(--f-body); display: inline-flex; align-items: center; gap: 8px;
+  padding: 11px 20px; border-radius: 999px; cursor: pointer; border: 1px solid transparent;
+  transition: transform 0.25s, box-shadow 0.25s, background 0.25s;
 }
-.section h2 { font-size: var(--step-2); font-weight: 700; font-stretch: 105%; line-height: 1.2; }
-.section .kicker { color: var(--ink-soft); margin-top: 6px; max-width: 40em; }
-.body { min-width: 0; }
+.btn-primary { background: var(--hue-7); color: var(--bg); box-shadow: var(--shadow-1); }
+.btn-primary:hover { transform: translateY(-1px); box-shadow: var(--shadow-2); }
+.btn-ghost { background: var(--card-solid); color: var(--ink); border-color: var(--line); }
+.btn-ghost:hover { border-color: var(--line-strong); transform: translateY(-1px); }
+.note { font-family: var(--f-hand); font-size: 1.45rem; line-height: 1.2; color: var(--hue-6); transform: rotate(-1.5deg); transform-origin: left; margin-top: auto; padding-top: 6px; }
 
-/* ---------- projects ---------- */
-.projects { display: grid; gap: 28px; margin-top: 28px; }
-.project { background: var(--sheet); border: 1px solid var(--line); }
-.project-head { padding: 24px 26px 0; display: grid; gap: 6px; }
-.project h3 { font-size: var(--step-1); font-weight: 700; font-stretch: 100%; line-height: 1.3; }
-.meta { font-family: var(--f-mono); font-size: var(--step--1); color: var(--ink-soft); display: flex; flex-wrap: wrap; gap: 4px 14px; }
-.figures {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin: 20px 26px 0;
-  border-top: 1px solid var(--ink);
-  border-bottom: 1px solid var(--line);
+.hero-side { position: relative; min-height: 420px; }
+.photo-back { position: absolute; inset: 26px -10px -6px 34px; border-radius: var(--r-lg); background: linear-gradient(150deg, var(--wash-3), var(--hue-4)); opacity: 0.7; }
+.photo-card { position: relative; height: 100%; padding: 12px; border-radius: var(--r-lg); overflow: hidden; }
+.photo-card img { width: 100%; height: 100%; min-height: 396px; object-fit: cover; object-position: center 22%; border-radius: 14px; display: block; filter: saturate(0.82); }
+.chip-float {
+  position: absolute; z-index: 2; padding: 12px 16px; border-radius: var(--r-md);
+  background: var(--glass); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+  border: 1px solid var(--line); box-shadow: var(--shadow-2); display: grid; gap: 1px;
 }
-.fig { padding: 12px 14px 14px 0; display: grid; gap: 2px; }
-.fig + .fig { padding-left: 14px; border-left: 1px solid var(--line); }
-.fig .v { font-family: var(--f-display); font-weight: 700; font-stretch: 112%; font-size: 1.75rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
-.fig .v.hot { color: var(--mark); }
-.fig .k { font-size: 0.82rem; color: var(--ink-soft); line-height: 1.35; }
-.project-body { padding: 18px 26px 24px; display: grid; gap: 16px; }
-.steps { display: grid; grid-template-columns: 104px minmax(0, 1fr); gap: 10px 18px; margin: 0; }
-.steps dt { font-family: var(--f-mono); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); padding-top: 3px; }
-.steps dd { margin: 0; max-width: 62ch; }
-.shot { margin: 4px 0 0; border: 1px solid var(--line); }
-.shot img { display: block; width: 100%; height: auto; }
-.shot figcaption { font-family: var(--f-mono); font-size: 0.75rem; color: var(--ink-soft); padding: 8px 12px; border-top: 1px solid var(--line); }
-.tags { display: flex; flex-wrap: wrap; gap: 6px; }
-.tag { font-family: var(--f-mono); font-size: 0.76rem; padding: 2px 8px; background: var(--accent-soft); color: var(--ink); }
-.project-links { display: flex; flex-wrap: wrap; gap: 8px 20px; font-family: var(--f-display); font-weight: 600; font-stretch: 90%; }
+.chip-float b { font-family: var(--f-display); font-weight: 500; font-size: 1.55rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.chip-float span { font-size: 0.75rem; color: var(--ink-soft); }
+.chip-a { left: -26px; bottom: 74px; }
+.chip-b { right: -12px; top: 38px; }
 
+/* ---------- facts strip ---------- */
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; padding-bottom: 20px; }
+.fact { padding: 18px 20px; display: grid; gap: 2px; }
+.fact .k { font-size: 0.78rem; color: var(--ink-faint); }
+.fact .v { font-weight: 600; font-size: 0.98rem; }
 
-/* ---------- charts and tables inside projects ---------- */
-.chart { margin: 4px 0 0; display: grid; gap: 10px; }
-.chart figcaption { font-size: 0.95rem; color: var(--ink-soft); max-width: 62ch; }
-.chart figcaption b { color: var(--ink); font-weight: 600; }
-.chart-box { overflow-x: auto; }
-.chart-box svg { display: block; width: 100%; min-width: 460px; height: auto; font-family: var(--f-mono); }
-.c-lab { font-size: 12px; fill: var(--ink); font-family: var(--f-display); }
-.c-val { font-size: 11px; fill: var(--ink-soft); }
-.c-strong { fill: var(--ink); font-weight: 500; }
-.c-key { font-size: 11px; fill: var(--ink-soft); }
-.c-tick { font-size: 10.5px; fill: var(--ink-soft); }
-.c-grid { stroke: var(--line); stroke-width: 1; }
-.c-cust { fill: var(--line); }
-.c-rev { fill: var(--accent); }
-.c-line { fill: none; stroke: var(--accent); stroke-width: 2.25; stroke-linejoin: round; }
-.c-area { fill: var(--accent-soft); stroke: none; }
-.c-partial { stroke: var(--accent); stroke-width: 1.5; stroke-dasharray: 4 4; }
-.c-open { fill: var(--sheet); stroke: var(--accent); stroke-width: 1.5; }
-.c-dot { fill: var(--accent); }
-.c-hot { fill: var(--mark); }
-.table-wrap { overflow-x: auto; }
-.seg { width: 100%; min-width: 520px; border-collapse: collapse; font-size: 0.9rem; font-variant-numeric: tabular-nums; }
-.seg th, .seg td { padding: 8px 10px; text-align: right; border-bottom: 1px solid var(--line); }
-.seg thead th { font-family: var(--f-mono); font-size: 0.72rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-soft); border-bottom: 1px solid var(--ink); vertical-align: bottom; }
+/* ---------- sections ---------- */
+.section { padding-block: 64px 8px; }
+.section-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 12px 24px; margin-bottom: 26px; }
+.section-head h2 { font-family: var(--f-display); font-size: clamp(2rem, 4vw, 2.7rem); line-height: 1.08; letter-spacing: -0.01em; margin-top: 8px; }
+.section-head p { color: var(--ink-soft); max-width: 34em; }
+
+/* ---------- project cards ---------- */
+.projects { display: grid; gap: 28px; }
+.project { overflow: hidden; }
+.project-top { padding: 32px 36px 0; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 20px; align-items: start; }
+.badge { font-size: 0.74rem; font-weight: 600; color: var(--hue-7); background: var(--wash-2); padding: 5px 12px; border-radius: 999px; white-space: nowrap; }
+.project h3 { font-family: var(--f-display); font-size: clamp(1.5rem, 3vw, 2rem); line-height: 1.15; grid-column: 1 / -1; }
+.project .meta { grid-column: 1 / -1; color: var(--ink-faint); font-size: 0.86rem; }
+
+.tabs { display: flex; gap: 4px; margin: 24px 36px 0; padding: 4px; background: var(--card-tint); border-radius: 999px; width: max-content; max-width: calc(100% - 72px); overflow-x: auto; scrollbar-width: none; }
+.tabs::-webkit-scrollbar { display: none; }
+.tab { font: 500 0.86rem var(--f-body); color: var(--ink-soft); background: transparent; border: 0; padding: 8px 16px; border-radius: 999px; cursor: pointer; white-space: nowrap; transition: background 0.25s, color 0.25s, box-shadow 0.25s; }
+.tab:hover { color: var(--ink); }
+.tab[aria-selected="true"] { background: var(--card-solid); color: var(--ink); box-shadow: var(--shadow-1); }
+.panel { padding: 26px 36px 36px; }
+.panel[hidden] { display: none !important; }
+.panel-in { animation: fade 0.4s ease; }
+@keyframes fade { from { opacity: 0.35; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.stat { padding: 20px 22px; border-radius: var(--r-md); background: var(--card-solid); border: 1px solid var(--line); display: grid; gap: 4px; }
+.stat.key { background: linear-gradient(160deg, var(--wash-2), var(--wash-1)); border-color: var(--line-strong); }
+.stat b { font-family: var(--f-display); font-weight: 500; font-size: 2.2rem; line-height: 1.05; font-variant-numeric: tabular-nums; color: var(--ink); }
+.stat.key b { color: var(--hue-7); }
+.stat span { font-size: 0.84rem; color: var(--ink-soft); line-height: 1.45; }
+.overview { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 22px; margin-top: 22px; align-items: start; }
+.overview p { color: var(--ink-soft); }
+.overview p + p { margin-top: 12px; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 18px; }
+.tag { font-family: var(--f-mono); font-size: 0.72rem; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line-strong); color: var(--ink-soft); }
+.links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+.thumb { border-radius: var(--r-md); overflow: hidden; border: 1px solid var(--line); background: var(--card-solid); box-shadow: var(--shadow-1); position: relative; }
+.thumb img { display: block; width: 100%; height: auto; }
+.thumb figcaption { font-size: 0.78rem; color: var(--ink-faint); padding: 10px 14px; border-top: 1px solid var(--line); }
+
+/* process steps */
+.steps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; counter-reset: step; }
+.step { padding: 22px 24px; border-radius: var(--r-md); background: var(--card-solid); border: 1px solid var(--line); counter-increment: step; }
+.step h4 { margin: 0 0 6px; font-size: 0.98rem; font-weight: 600; display: flex; align-items: center; gap: 10px; }
+.step h4::before { content: counter(step); font-family: var(--f-mono); font-size: 0.72rem; font-weight: 500; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; background: var(--wash-2); color: var(--hue-7); flex: none; }
+.step p { color: var(--ink-soft); font-size: 0.93rem; }
+
+/* charts */
+.charts { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+.chart-card { padding: 22px 22px 18px; border-radius: var(--r-md); background: var(--card-solid); border: 1px solid var(--line); min-width: 0; position: relative; }
+.chart-card.wide { grid-column: 1 / -1; }
+.chart-card h4 { margin: 0; font-size: 0.98rem; font-weight: 600; }
+.chart-card .sub { font-size: 0.84rem; color: var(--ink-soft); margin-top: 2px; }
+.chart-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 16px; align-items: start; margin-bottom: 12px; }
+.seg-toggle { display: flex; gap: 2px; padding: 3px; background: var(--card-tint); border-radius: 999px; }
+.seg-toggle button { font: 500 0.76rem var(--f-body); border: 0; background: transparent; color: var(--ink-soft); padding: 5px 11px; border-radius: 999px; cursor: pointer; }
+.seg-toggle button[aria-pressed="true"] { background: var(--card-solid); color: var(--ink); box-shadow: var(--shadow-1); }
+.chart { width: 100%; overflow-x: auto; }
+.chart svg { display: block; width: 100%; height: auto; min-width: 300px; font-family: var(--f-body); }
+.chart text { fill: var(--ink-soft); font-size: 11px; }
+.chart .lab { fill: var(--ink); font-size: 12px; }
+.chart .val { fill: var(--ink); font-size: 11.5px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.chart .grid { stroke: var(--line); }
+.chart .ref { stroke: var(--hue-5); stroke-dasharray: 4 4; }
+.chart .bar { fill: var(--hue-4); transition: fill 0.2s; }
+.chart .bar.hi { fill: var(--hue-6); }
+.chart .bar:hover { fill: var(--hue-7); }
+.chart .line { fill: none; stroke: var(--hue-6); stroke-width: 2.25; stroke-linejoin: round; stroke-linecap: round; }
+.chart .area { fill: var(--wash-2); }
+.chart .vol { fill: var(--wash-2); }
+.chart .dot { fill: var(--card-solid); stroke: var(--hue-6); stroke-width: 2; }
+.chart .dot.hi { fill: var(--hue-7); stroke: var(--hue-7); }
+.chart .hit { fill: transparent; cursor: crosshair; }
+.chart .partial { stroke: var(--hue-5); stroke-width: 1.5; stroke-dasharray: 4 4; fill: none; }
+.tip {
+  position: absolute; pointer-events: none; z-index: 5; padding: 8px 12px; border-radius: 10px;
+  background: var(--glass); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  border: 1px solid var(--line-strong); box-shadow: var(--shadow-2); font-size: 0.8rem; line-height: 1.4;
+  white-space: nowrap; transform: translate(-50%, calc(-100% - 12px)); transition: opacity 0.15s;
+}
+.tip b { font-variant-numeric: tabular-nums; }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 0.78rem; color: var(--ink-soft); margin-top: 6px; }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+
+.table-wrap { overflow-x: auto; margin-top: 4px; }
+table.seg { width: 100%; min-width: 360px; border-collapse: collapse; font-size: 0.88rem; font-variant-numeric: tabular-nums; }
+.seg th, .seg td { padding: 10px 8px; text-align: right; border-bottom: 1px solid var(--line); }
+.seg thead th { font-size: 0.72rem; font-weight: 600; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.06em; }
 .seg th:first-child { text-align: left; padding-left: 0; }
-.seg tbody th { font-family: var(--f-display); font-weight: 600; }
-.seg tbody tr:first-child th, .seg tbody tr:first-child td { color: var(--accent); }
-.recs { margin: 0; padding-left: 1.2em; display: grid; gap: 8px; }
-.recs b { font-weight: 600; }
+.seg tbody th { font-weight: 600; }
+.seg tbody tr { transition: background 0.2s; }
+.seg tbody tr:hover { background: var(--card-tint); }
+.seg tbody tr:first-child { color: var(--hue-7); }
 
-/* ---------- story ---------- */
-.story { margin-top: 18px; display: grid; gap: 14px; max-width: 64ch; }
+/* recommendations */
+.recs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.rec { padding: 22px 22px 20px; border-radius: var(--r-md); background: var(--card-solid); border: 1px solid var(--line); display: flex; flex-direction: column; gap: 10px; }
+.rec h4 { margin: 0; font-family: var(--f-display); font-weight: 500; font-size: 1.22rem; line-height: 1.25; }
+.rec p { font-size: 0.9rem; color: var(--ink-soft); }
+.rec .track { margin-top: auto; padding-top: 12px; border-top: 1px dashed var(--line-strong); font-size: 0.8rem; color: var(--ink-soft); }
+.rec .track b { font-weight: 600; color: var(--hue-7); }
 
-/* ---------- experience / education ---------- */
-.rows { margin-top: 22px; display: grid; }
-.row { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 4px 24px; padding-block: 16px; border-top: 1px solid var(--line); }
-.row:last-child { border-bottom: 1px solid var(--line); }
-.when { font-family: var(--f-mono); font-size: 0.82rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; padding-top: 3px; }
-.what h3 { font-size: 1.05rem; font-weight: 700; font-stretch: 100%; }
-.what .org { color: var(--ink-soft); font-size: 0.95rem; }
-.what p { margin-top: 6px; max-width: 64ch; }
+/* ---------- about ---------- */
+.about { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 22px; }
+.quote { padding: 40px; background: linear-gradient(160deg, var(--wash-2), var(--wash-1)); display: flex; flex-direction: column; justify-content: space-between; gap: 24px; }
+.quote blockquote { margin: 0; font-family: var(--f-display); font-size: clamp(1.5rem, 2.8vw, 2rem); line-height: 1.25; font-style: italic; color: var(--hue-7); }
+.quote .figs { display: flex; gap: 26px; flex-wrap: wrap; }
+.quote .figs div { display: grid; }
+.quote .figs b { font-family: var(--f-display); font-weight: 500; font-size: 1.7rem; }
+.quote .figs span { font-size: 0.78rem; color: var(--ink-soft); }
+.about-text { padding: 36px 40px; display: grid; gap: 14px; align-content: center; }
+.about-text p { color: var(--ink-soft); }
+.about-text p strong { color: var(--ink); font-weight: 600; }
 
-/* ---------- skills ---------- */
-.skills { margin-top: 22px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 32px; }
-.skill { padding-block: 14px; border-top: 1px solid var(--line); }
-.skill h3 { font-family: var(--f-mono); font-size: 0.78rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; color: var(--accent); }
-.skill p { margin-top: 4px; }
+/* ---------- timeline ---------- */
+.two { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 22px; align-items: start; }
+.timeline { padding: 28px 32px; }
+.timeline h3, .edu h3, .skills h3 { font-family: var(--f-display); font-size: 1.45rem; margin-bottom: 14px; }
+.tl { list-style: none; margin: 0; padding: 0; display: grid; }
+.tl li { position: relative; padding: 14px 0 14px 26px; border-left: 1px solid var(--line-strong); margin-left: 5px; }
+.tl li::before { content: ""; position: absolute; left: -6px; top: 22px; width: 11px; height: 11px; border-radius: 50%; background: var(--card-solid); border: 2px solid var(--hue-5); transition: background 0.25s; }
+.tl li:hover::before { background: var(--hue-6); }
+.tl li:first-child { padding-top: 4px; } .tl li:first-child::before { top: 12px; }
+.tl .when { font-family: var(--f-mono); font-size: 0.72rem; color: var(--ink-faint); }
+.tl h4 { margin: 2px 0 0; font-size: 1rem; font-weight: 600; }
+.tl .org { font-size: 0.86rem; color: var(--hue-6); }
+.tl p { font-size: 0.9rem; color: var(--ink-soft); margin-top: 6px; }
+.stack { display: grid; gap: 22px; }
+.edu, .skills { padding: 28px 32px; }
+.school { padding: 14px 0; border-top: 1px solid var(--line); }
+.school:first-of-type { border-top: 0; padding-top: 0; }
+.school h4 { margin: 0; font-size: 1rem; font-weight: 600; }
+.school .org { font-size: 0.86rem; color: var(--hue-6); }
+.school p { font-size: 0.86rem; color: var(--ink-soft); margin-top: 4px; }
+.school .gpa { display: inline-block; margin-top: 8px; font-size: 0.78rem; font-weight: 600; color: var(--hue-7); background: var(--wash-2); padding: 3px 10px; border-radius: 999px; }
+.skill-group + .skill-group { margin-top: 14px; }
+.skill-group .k { font-size: 0.74rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-faint); margin-bottom: 6px; }
+.pills { display: flex; flex-wrap: wrap; gap: 6px; }
+.pill { font-size: 0.82rem; padding: 5px 12px; border-radius: 999px; background: var(--card-solid); border: 1px solid var(--line); transition: border-color 0.2s, background 0.2s; }
+.pill:hover { border-color: var(--hue-5); background: var(--wash-1); }
 
 /* ---------- contact ---------- */
-.contact { margin-top: 20px; display: grid; gap: 12px; }
-.email { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
-.email code { font-family: var(--f-mono); font-size: 1.05rem; user-select: all; overflow-wrap: anywhere; }
-.copy {
-  font-family: var(--f-mono); font-size: 0.8rem;
-  border: 1px solid var(--ink); background: transparent; color: var(--ink);
-  padding: 5px 12px; cursor: pointer;
-}
-.copy:hover { background: var(--ink); color: var(--paper); }
+.contact { margin-top: 64px; padding: 48px; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 32px; align-items: center; background: linear-gradient(140deg, var(--card), var(--card-tint)); }
+.contact h2 { font-family: var(--f-display); font-size: clamp(2rem, 4.4vw, 3rem); line-height: 1.05; }
+.contact p { color: var(--ink-soft); margin-top: 12px; max-width: 32em; }
+.contact-box { display: grid; gap: 12px; }
+.email-row { display: flex; align-items: center; gap: 10px; padding: 8px 8px 8px 18px; border-radius: 999px; background: var(--card-solid); border: 1px solid var(--line); }
+.email-row code { font-family: var(--f-mono); font-size: 0.92rem; flex: 1; min-width: 0; overflow-wrap: anywhere; user-select: all; }
+.social { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.social a { padding: 12px 14px; border-radius: var(--r-md); background: var(--card-solid); border: 1px solid var(--line); color: var(--ink); font-weight: 600; font-size: 0.86rem; display: flex; justify-content: space-between; align-items: center; transition: border-color 0.2s, transform 0.25s; }
+.social a::after { content: "↗"; color: var(--hue-5); }
+.social a:hover { border-color: var(--hue-5); transform: translateY(-2px); }
+.sign { font-family: var(--f-hand); font-size: 1.6rem; color: var(--hue-6); margin-top: 14px; }
 
-/* ---------- title block footer ---------- */
-.titleblock {
-  margin-block: 56px 40px;
-  border: 1.5px solid var(--ink);
-  display: grid;
-  grid-template-columns: 2fr repeat(4, minmax(0, 1fr));
-  font-family: var(--f-mono);
-  font-size: 0.76rem;
-}
-.titleblock div { padding: 8px 12px; border-left: 1px solid var(--ink); min-width: 0; }
-.titleblock div:first-child { border-left: 0; }
-.titleblock span { display: block; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.66rem; }
+footer { padding-block: 40px 48px; text-align: center; font-size: 0.8rem; color: var(--ink-faint); }
 
-@media (max-width: 760px) {
-  body { font-size: 16px; }
-  .opener { grid-template-columns: minmax(0, 1fr); padding-block: 36px 32px; gap: 28px; }
-  .portrait { max-width: 180px; order: -1; }
-  .section { grid-template-columns: minmax(0, 1fr); padding-block: 32px; }
-  .axis { justify-content: flex-start; margin-bottom: 14px; }
-  .axis::after { display: none; }
-  .figures { grid-template-columns: minmax(0, 1fr); margin-inline: 18px; }
-  .fig + .fig { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); }
-  .project-head, .project-body { padding-inline: 18px; }
-  .steps { grid-template-columns: minmax(0, 1fr); gap: 2px; }
-  .steps dd { margin-bottom: 10px; }
-  .row { grid-template-columns: minmax(0, 1fr); }
-  .skills { grid-template-columns: minmax(0, 1fr); }
-  .titleblock { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .titleblock div { border-left: 0; border-top: 1px solid var(--ink); }
-  .titleblock div:first-child { grid-column: 1 / -1; border-top: 0; }
-  .titleblock div:nth-child(odd):not(:first-child) { border-left: 1px solid var(--ink); }
+@media (max-width: 900px) {
+  .hero, .about, .two, .contact { grid-template-columns: minmax(0, 1fr); }
+  .hero-side { min-height: 0; max-width: 420px; }
+  .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .overview, .charts { grid-template-columns: minmax(0, 1fr); }
+  .recs { grid-template-columns: minmax(0, 1fr); }
 }
-@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+@media (max-width: 620px) {
+  .nav { padding-left: 14px; gap: 10px; }
+  .avail { display: none; }
+  .hero { padding-top: 28px; }
+  .hero-main { padding: 28px 22px; }
+  .chip-a { left: 8px; bottom: 18px; } .chip-b { right: 8px; top: 18px; }
+  .photo-back { inset: 18px 0 -6px 18px; }
+  .photo-card img { min-height: 320px; }
+  .project-top, .panel { padding-inline: 20px; }
+  .tabs { margin-inline: 20px; max-width: calc(100% - 40px); }
+  .stats, .steps { grid-template-columns: minmax(0, 1fr); }
+  .about-text, .quote, .timeline, .edu, .skills, .contact { padding: 26px 22px; }
+  .social { grid-template-columns: minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
 </style>
-<style>body{margin:0}img{max-width:100%}</style>
 </head>
 <body>
+<div class="wash" aria-hidden="true"><i></i><i></i><i></i></div>
+
+<nav class="nav" aria-label="Sections">
+  <span class="mono">X. Chen</span>
+  <div class="nav-links">
+    <a href="#projects">Projects</a>
+    <a href="#about">About</a>
+    <a href="#experience">Experience</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <span class="avail">Available Jan 2027</span>
+</nav>
+
 <div class="wrap">
 
-  <header class="opener">
-    <div>
-      <p class="eyebrow">Data analytics · Operations · Supply chain</p>
-      <h1 class="name">Xiangqi Chen<span class="cn">陈湘绮</span></h1>
-      <p class="lede">I trained as an architect at Zhejiang University and now study <strong>Industrial &amp; Systems Engineering (Data Analytics)</strong> at the National University of Singapore. I like questions that can be answered with data: where a process slows down, which customers matter most, and what to do about it.</p>
-      <p class="status">Open to internships · Jan–Jun 2027 · Singapore</p>
-      <nav class="links" aria-label="Profiles">
-        <a href="https://www.linkedin.com/in/xiangqi-chen/" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="https://github.com/chenxiangqi03-dot" target="_blank" rel="noopener">GitHub</a>
-        <a href="https://public.tableau.com/app/profile/xiangqi.chen" target="_blank" rel="noopener">Tableau Public</a>
-        <a href="#contact">Contact</a>
-      </nav>
+  <header class="hero">
+    <div class="card hero-main">
+      <span class="eyebrow">Data analytics · Operations · Supply chain</span>
+      <div>
+        <h1>Xiangqi <em>Chen</em></h1>
+        <span class="cn">陈湘绮</span>
+      </div>
+      <p class="lede">An architect turned data analyst. I studied <strong>Architecture at Zhejiang University</strong> and now study <strong>Industrial &amp; Systems Engineering (Data Analytics) at NUS</strong>. I like questions that data can answer: where a process slows down, which customers matter most, and what to do next.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="#projects">View case studies ↓</a>
+        <button class="btn btn-ghost" type="button" data-copy="chenxiangqi03@gmail.com">Copy email</button>
+      </div>
+      <p class="note">Open to a six-month internship in Singapore from January 2027.</p>
     </div>
-    <div class="portrait">
-      <img src="photo.jpg" alt="Portrait of Xiangqi Chen" width="440" height="550">
-      <div class="dim" aria-hidden="true"><i></i><b></b><span>SCALE 1:1</span><b></b><i></i></div>
+    <div class="hero-side">
+      <div class="photo-back" aria-hidden="true"></div>
+      <div class="card photo-card"><img src="photo.jpg" alt="Portrait of Xiangqi Chen" width="440" height="550"></div>
+      <div class="chip-float chip-b"><b>96,470</b><span>orders analysed in SQL</span></div>
+      <div class="chip-float chip-a"><b>541,909</b><span>retail rows audited in pandas</span></div>
     </div>
   </header>
 
-  <!-- A: projects -->
+  <div class="facts">
+    <div class="card fact lift"><span class="k">Studying</span><span class="v">MSc ISE, NUS</span></div>
+    <div class="card fact lift"><span class="k">Background</span><span class="v">B.Arch, Zhejiang University</span></div>
+    <div class="card fact lift"><span class="k">Core tools</span><span class="v">SQL · Python · Tableau</span></div>
+    <div class="card fact lift"><span class="k">Based in</span><span class="v">Singapore</span></div>
+  </div>
+
+  <!-- ======================= PROJECTS ======================= -->
   <section class="section" id="projects" aria-labelledby="h-projects">
-    <div class="axis"><span class="bubble">A</span></div>
-    <div class="body">
-      <h2 id="h-projects">Projects</h2>
-      <p class="kicker">Two end-to-end analyses, from raw data to recommendations.</p>
+    <div class="section-head">
+      <div><span class="eyebrow">Selected work</span><h2 id="h-projects">Case studies</h2></div>
+      <p>Two end-to-end analyses, each taken from raw data to a recommendation a manager could act on.</p>
+    </div>
 
-      <div class="projects">
+    <div class="projects">
 
-        <article class="project">
-          <div class="project-head">
-            <h3>Where and when do e-commerce deliveries run late?</h3>
-            <div class="meta"><span>Olist, Brazil · 2016–2018 data</span><span>Personal project · Oct–Nov 2026</span></div>
+      <!-- Olist -->
+      <article class="card project" data-tabs>
+        <div class="project-top">
+          <span class="eyebrow">E-commerce logistics</span>
+          <span class="badge">Personal project · 2026</span>
+          <h3>Where and when do e-commerce deliveries run late?</h3>
+          <p class="meta">Olist marketplace, Brazil · 99,441 orders, 2016–2018 · MySQL, Python, Tableau</p>
+        </div>
+        <div class="tabs" role="tablist" aria-label="Olist case study">
+          <button class="tab" role="tab" aria-selected="true" id="o-t1" aria-controls="o-p1">Overview</button>
+          <button class="tab" role="tab" aria-selected="false" id="o-t2" aria-controls="o-p2" tabindex="-1">Process</button>
+          <button class="tab" role="tab" aria-selected="false" id="o-t3" aria-controls="o-p3" tabindex="-1">Insights</button>
+          <button class="tab" role="tab" aria-selected="false" id="o-t4" aria-controls="o-p4" tabindex="-1">Recommendations</button>
+        </div>
+
+        <div class="panel" role="tabpanel" id="o-p1" aria-labelledby="o-t1">
+          <div class="stats">
+            <div class="stat"><b>96,470</b><span>delivered orders analysed across 9 linked tables</span></div>
+            <div class="stat key"><b>6.77%</b><span>arrived after the date promised to the customer</span></div>
+            <div class="stat"><b>4.29 → 2.27</b><span>average review stars, on-time orders vs late orders</span></div>
           </div>
-          <div class="figures">
-            <div class="fig"><span class="v">96,470</span><span class="k">delivered orders analysed across 9 linked tables</span></div>
-            <div class="fig"><span class="v hot">6.77%</span><span class="k">arrived after the promised date</span></div>
-            <div class="fig"><span class="v">2.27 <small style="font-size:0.55em;font-weight:500">vs</small> 4.29</span><span class="k">average review stars, late vs on-time orders</span></div>
-          </div>
-          <div class="project-body">
-            <dl class="steps">
-              <dt>Built</dt>
-              <dd>A MySQL database of 1.5M+ rows with keys and foreign keys, loaded with Python. Fixed data-quality problems on the way: non-unique review IDs, zip codes that lost their leading zeros, and products with no category.</dd>
-              <dt>Analysed</dt>
-              <dd>Late rate by state, product category and month with multi-table JOINs, CTEs and window functions (LAG for month-over-month change).</dd>
-              <dt>Found</dt>
-              <dd>Region matters most. Rio de Janeiro, the second-largest market, runs at 12.1% late against São Paulo's 4.5%. Late rates spike at Black Friday (12.4%) and peak in March 2018 (19.0%).</dd>
-              <dt>Recommended</dt>
-              <dd>Region-specific delivery promises for remote states, carrier review for Rio de Janeiro, and logistics capacity planning before peak periods.</dd>
-            </dl>
-            <figure class="shot">
-              <img src="dashboard.jpg" alt="Tableau dashboard showing KPI cards, late rate by Brazilian state on a map, the top 10 product categories by late rate, and monthly late rate against order volume" width="1600" height="1200" loading="lazy">
-              <figcaption>Interactive Tableau dashboard. Clicking a state filters the KPIs and the monthly trend.</figcaption>
+          <div class="overview">
+            <div>
+              <p>A marketplace promises each customer a delivery date. I wanted to know how often that promise is broken, where and when it breaks, and whether customers notice.</p>
+              <p>The answer: region matters most. Rio de Janeiro, the second-largest market, is late 12.1% of the time against 4.5% in São Paulo, and delays spike around Black Friday and in early 2018.</p>
+              <div class="tags"><span class="tag">MySQL</span><span class="tag">JOINs</span><span class="tag">CTEs</span><span class="tag">Window functions</span><span class="tag">Python</span><span class="tag">Tableau</span></div>
+              <div class="links">
+                <a class="btn btn-primary" href="https://public.tableau.com/app/profile/xiangqi.chen/viz/OlistDeliveryPerformanceDashboard_17936172935180/OlistDeliveryPerformance20172018" target="_blank" rel="noopener">Open dashboard ↗</a>
+                <a class="btn btn-ghost" href="https://github.com/chenxiangqi03-dot/olist-delivery-analysis" target="_blank" rel="noopener">SQL on GitHub ↗</a>
+              </div>
+            </div>
+            <figure class="thumb lift" style="margin:0">
+              <img src="dashboard.jpg" alt="Tableau dashboard with KPI cards, late rate by Brazilian state, top 10 product categories by late rate, and monthly late rate against order volume" width="1600" height="1200" loading="lazy">
+              <figcaption>Interactive Tableau dashboard. Clicking a state filters every chart.</figcaption>
             </figure>
-            <div class="tags"><span class="tag">MySQL</span><span class="tag">Python</span><span class="tag">Tableau</span><span class="tag">CTEs</span><span class="tag">Window functions</span></div>
-            <div class="project-links">
-              <a href="https://public.tableau.com/app/profile/xiangqi.chen/viz/OlistDeliveryPerformanceDashboard_17936172935180/OlistDeliveryPerformance20172018" target="_blank" rel="noopener">Open the dashboard</a>
-              <a href="https://github.com/chenxiangqi03-dot/olist-delivery-analysis" target="_blank" rel="noopener">SQL code and write-up on GitHub</a>
+          </div>
+        </div>
+
+        <div class="panel" role="tabpanel" id="o-p2" aria-labelledby="o-t2" hidden>
+          <div class="steps">
+            <div class="step"><h4>Model the data</h4><p>Designed a 9-table MySQL schema with primary and foreign keys and loaded 1.55M rows with a Python script.</p></div>
+            <div class="step"><h4>Fix data quality</h4><p>Restored zip codes that lost their leading zero, keyed reviews on two columns because review IDs repeat, and kept 610 uncategorised products with LEFT JOIN and COALESCE.</p></div>
+            <div class="step"><h4>Define the metrics</h4><p>Delivered orders with a delivery date only (96,470). Late means delivered after the promised date; late rate is the share of late orders.</p></div>
+            <div class="step"><h4>Analyse and publish</h4><p>Late rate by state, category and month using JOINs, CTEs and LAG, then an interactive Tableau dashboard with map-driven filtering.</p></div>
+          </div>
+        </div>
+
+        <div class="panel" role="tabpanel" id="o-p3" aria-labelledby="o-t3" hidden>
+          <div class="charts">
+            <div class="chart-card">
+              <div class="chart-head"><div><h4>Late rate by customer state</h4><p class="sub">Selected states with 500+ orders. Dashed line: overall 6.77%.</p></div></div>
+              <div class="chart" id="c-states"></div>
+            </div>
+            <div class="chart-card">
+              <div class="chart-head"><div><h4>Every extra day late costs stars</h4><p class="sub">Average review score by days late.</p></div></div>
+              <div class="chart" id="c-stars"></div>
+            </div>
+            <div class="chart-card wide">
+              <div class="chart-head"><div><h4>Late rate by month of purchase</h4><p class="sub">Bars show order volume. Hover a month for details.</p></div></div>
+              <div class="chart" id="c-olist-month"></div>
+              <div class="legend"><span><i style="background:var(--hue-6)"></i>Late rate</span><span><i style="background:var(--wash-2)"></i>Orders</span></div>
             </div>
           </div>
-        </article>
+        </div>
 
-        <article class="project">
-          <div class="project-head">
-            <h3>Which customers, products and markets should an online retailer prioritise?</h3>
-            <div class="meta"><span>UK online gift retailer · Dec 2010–Dec 2011 data</span><span>NUS IE5005 course project · Oct 2026</span></div>
+        <div class="panel" role="tabpanel" id="o-p4" aria-labelledby="o-t4" hidden>
+          <div class="recs">
+            <div class="rec"><h4>Fix Rio de Janeiro first</h4><p>High volume and a 12.1% late rate mean improvements there reach the most customers. Review carrier performance on RJ routes.</p><p class="track"><b>Track:</b> RJ late rate each month against São Paulo.</p></div>
+            <div class="rec"><h4>Promise what the region can deliver</h4><p>Add buffer days to the estimated date for remote north-eastern states. A later promise that is kept protects reviews better than an early one that is missed.</p><p class="track"><b>Track:</b> late rate and average stars by state.</p></div>
+            <div class="rec"><h4>Plan capacity before peaks</h4><p>Add logistics capacity before Black Friday, and investigate the February–March 2018 spike with carrier-level data.</p><p class="track"><b>Track:</b> weekly late rate during promotion periods.</p></div>
           </div>
-          <div class="figures">
-            <div class="fig"><span class="v">541,909</span><span class="k">transaction rows audited across 8 columns and 38 countries</span></div>
-            <div class="fig"><span class="v hot">29.2%</span><span class="k">of customers (Champions) bring in 76.5% of identified-customer revenue</span></div>
-            <div class="fig"><span class="v">£5,301</span><span class="k">average spend per Champion, about 24× a lapsed customer (£219)</span></div>
+        </div>
+      </article>
+
+      <!-- IE5005 -->
+      <article class="card project" data-tabs>
+        <div class="project-top">
+          <span class="eyebrow">Retail customer analytics</span>
+          <span class="badge">NUS IE5005 · 2026</span>
+          <h3>Which customers, products and markets should an online retailer prioritise?</h3>
+          <p class="meta">UK online gift retailer · 541,909 transactions, Dec 2010 – Dec 2011 · Python (pandas), Power BI</p>
+        </div>
+        <div class="tabs" role="tablist" aria-label="Online retail case study">
+          <button class="tab" role="tab" aria-selected="true" id="r-t1" aria-controls="r-p1">Overview</button>
+          <button class="tab" role="tab" aria-selected="false" id="r-t2" aria-controls="r-p2" tabindex="-1">Process</button>
+          <button class="tab" role="tab" aria-selected="false" id="r-t3" aria-controls="r-p3" tabindex="-1">Insights</button>
+          <button class="tab" role="tab" aria-selected="false" id="r-t4" aria-controls="r-p4" tabindex="-1">Recommendations</button>
+        </div>
+
+        <div class="panel" role="tabpanel" id="r-p1" aria-labelledby="r-t1">
+          <div class="stats">
+            <div class="stat"><b>£10.27M</b><span>genuine sales across 528,957 lines after cleaning</span></div>
+            <div class="stat key"><b>29.2%</b><span>of customers (Champions) bring in 76.5% of identified-customer revenue</span></div>
+            <div class="stat"><b>24×</b><span>a Champion's average spend (£5,301) against a lapsed customer's (£219)</span></div>
           </div>
-          <div class="project-body">
-            <dl class="steps">
-              <dt>Audited</dt>
-              <dd>Built a data dictionary and a quality audit for all 8 columns, and found 6 issues with row counts: 9,288 cancellation rows, 10,624 negative quantities, 135,080 missing customer IDs (24.9%), 2,912 non-product codes such as POST and BANK CHARGES, 2,517 zero or negative prices, and 27,386 quantity outliers above the 1.5×IQR fence of 26 units.</dd>
-              <dt>Cleaned</dt>
-              <dd>Flagged problem rows instead of deleting them, so the cancellation rate (13.5% of orders, £478,724 reversed) could still be reported. Every decision went into a cleaning log. The result: 528,957 genuine sale lines worth £10.27M.</dd>
-              <dt>Explored</dt>
-              <dd>Quantity has a mean of 10.67 but a median of 3, so I used the median as the typical order. The UK is 91.7% of lines but has the lowest revenue per line of the top five markets (£18.03, against £34.84 in EIRE and £23.74 in Germany).</dd>
-              <dt>Segmented</dt>
-              <dd>Scored 4,335 customers on Recency, Frequency and Monetary value by quartile (1–4 each, total 3–12) in pandas, using 2011-12-10 as the snapshot date, and grouped them into four segments.</dd>
-            </dl>
-
-            <figure class="chart">
-              <figcaption><b>Revenue is concentrated in a small group of customers.</b> Champions and Loyal customers are 58.5% of customers but 92.0% of revenue.</figcaption>
-              <div class="chart-box"><svg viewBox="0 0 640 240" role="img" aria-label="Share of customers and share of revenue by RFM segment. Champions are 29.2 percent of customers and 76.5 percent of revenue.">
-<rect x="150" y="10" width="11" height="11" class="c-cust"/><text x="167" y="20" class="c-key">Share of customers</text>
-<rect x="320" y="10" width="11" height="11" class="c-rev"/><text x="337" y="20" class="c-key">Share of revenue</text>
-<line x1="150.0" x2="150.0" y1="40" y2="216" class="c-grid"/><text x="150.0" y="230" text-anchor="middle" class="c-tick">0%</text><line x1="262.5" x2="262.5" y1="40" y2="216" class="c-grid"/><text x="262.5" y="230" text-anchor="middle" class="c-tick">20%</text><line x1="375.0" x2="375.0" y1="40" y2="216" class="c-grid"/><text x="375.0" y="230" text-anchor="middle" class="c-tick">40%</text><line x1="487.5" x2="487.5" y1="40" y2="216" class="c-grid"/><text x="487.5" y="230" text-anchor="middle" class="c-tick">60%</text><line x1="600.0" x2="600.0" y1="40" y2="216" class="c-grid"/><text x="600.0" y="230" text-anchor="middle" class="c-tick">80%</text><text x="138" y="59" text-anchor="end" class="c-lab">Champions</text><rect x="150" y="46" width="164.2" height="11" class="c-cust"/><text x="320.2" y="56" class="c-val">29.2%</text><rect x="150" y="60" width="430.3" height="11" class="c-rev"/><text x="586.3" y="70" class="c-val c-strong">76.5%</text><text x="138" y="103" text-anchor="end" class="c-lab">Loyal Customers</text><rect x="150" y="90" width="164.8" height="11" class="c-cust"/><text x="320.8" y="100" class="c-val">29.3%</text><rect x="150" y="104" width="87.2" height="11" class="c-rev"/><text x="243.2" y="114" class="c-val c-strong">15.5%</text><text x="138" y="147" text-anchor="end" class="c-lab">At Risk</text><rect x="150" y="134" width="128.8" height="11" class="c-cust"/><text x="284.8" y="144" class="c-val">22.9%</text><rect x="150" y="148" width="33.8" height="11" class="c-rev"/><text x="189.8" y="158" class="c-val c-strong">6.0%</text><text x="138" y="191" text-anchor="end" class="c-lab">Lost / Low Value</text><rect x="150" y="178" width="104.6" height="11" class="c-cust"/><text x="260.6" y="188" class="c-val">18.6%</text><rect x="150" y="192" width="11.2" height="11" class="c-rev"/><text x="167.2" y="202" class="c-val c-strong">2.0%</text></svg></div>
-            </figure>
-
-            <div class="table-wrap">
-              <table class="seg">
-                <thead><tr><th scope="col">Segment</th><th scope="col">RFM score</th><th scope="col">Customers</th><th scope="col">Days since last order</th><th scope="col">Orders</th><th scope="col">Avg spend</th></tr></thead>
-                <tbody>
-                  <tr><th scope="row">Champions</th><td>10–12</td><td>1,265</td><td>19.7</td><td>9.9</td><td>£5,301</td></tr>
-                  <tr><th scope="row">Loyal Customers</th><td>7–9</td><td>1,272</td><td>61.3</td><td>2.9</td><td>£1,065</td></tr>
-                  <tr><th scope="row">At Risk</th><td>5–6</td><td>992</td><td>115.0</td><td>1.5</td><td>£528</td></tr>
-                  <tr><th scope="row">Lost / Low Value</th><td>3–4</td><td>806</td><td>229.3</td><td>1.1</td><td>£219</td></tr>
-                </tbody>
-              </table>
+          <div class="overview">
+            <div>
+              <p>The brief asked which customers, products and markets to prioritise next year, and where revenue is being lost. I audited and cleaned a year of transactions, explored them, and segmented customers with RFM scoring.</p>
+              <p>Revenue is highly concentrated: Champions and Loyal customers are 58.5% of customers but 92.0% of revenue. Ireland and Germany earn more per transaction line than the UK, and 13.5% of orders are cancelled.</p>
+              <div class="tags"><span class="tag">pandas</span><span class="tag">Data quality audit</span><span class="tag">RFM segmentation</span><span class="tag">Pareto analysis</span><span class="tag">Power BI</span></div>
             </div>
-
-            <figure class="chart">
-              <figcaption><b>Sales build towards the holiday season.</b> Monthly revenue nearly triples from the February low to the November peak. December 2011 is incomplete because the data ends on 9 December.</figcaption>
-              <div class="chart-box"><svg viewBox="0 0 640 236" role="img" aria-label="Monthly revenue, December 2010 to December 2011. Revenue peaks at 1.46 million pounds in November 2011; the February low is 0.51 million.">
-<line x1="56" x2="620" y1="196.0" y2="196.0" class="c-grid"/><text x="48" y="200.0" text-anchor="end" class="c-tick">£0.0M</text><line x1="56" x2="620" y1="153.0" y2="153.0" class="c-grid"/><text x="48" y="157.0" text-anchor="end" class="c-tick">£0.4M</text><line x1="56" x2="620" y1="110.0" y2="110.0" class="c-grid"/><text x="48" y="114.0" text-anchor="end" class="c-tick">£0.8M</text><line x1="56" x2="620" y1="67.0" y2="67.0" class="c-grid"/><text x="48" y="71.0" text-anchor="end" class="c-tick">£1.2M</text><line x1="56" x2="620" y1="24.0" y2="24.0" class="c-grid"/><text x="48" y="28.0" text-anchor="end" class="c-tick">£1.6M</text><path d="M56.0,196 L56.0,112.4 L103.0,123.8 L150.0,141.3 L197.0,121.7 L244.0,140.5 L291.0,116.3 L338.0,116.6 L385.0,121.9 L432.0,118.0 L479.0,85.2 L526.0,77.0 L573.0,39.3 L573.0,196 Z" class="c-area"/><polyline points="56.0,112.4 103.0,123.8 150.0,141.3 197.0,121.7 244.0,140.5 291.0,116.3 338.0,116.6 385.0,121.9 432.0,118.0 479.0,85.2 526.0,77.0 573.0,39.3" class="c-line"/><line x1="573.0" y1="39.3" x2="620.0" y2="129.8" class="c-partial"/><circle cx="620.0" cy="129.8" r="3.5" class="c-open"/><text x="616.0" y="147.8" text-anchor="end" class="c-tick">9 days only</text><circle cx="150.0" cy="141.3" r="3.5" class="c-dot"/><text x="150.0" y="159.3" text-anchor="middle" class="c-val">Feb: £0.51M</text><circle cx="573.0" cy="39.3" r="4.5" class="c-hot"/><text x="565.0" y="30.3" text-anchor="end" class="c-val c-strong">Nov 2011: £1.46M</text><text x="56.0" y="212" text-anchor="middle" class="c-tick">Dec</text><text x="103.0" y="212" text-anchor="middle" class="c-tick">Jan</text><text x="150.0" y="212" text-anchor="middle" class="c-tick">Feb</text><text x="197.0" y="212" text-anchor="middle" class="c-tick">Mar</text><text x="244.0" y="212" text-anchor="middle" class="c-tick">Apr</text><text x="291.0" y="212" text-anchor="middle" class="c-tick">May</text><text x="338.0" y="212" text-anchor="middle" class="c-tick">Jun</text><text x="385.0" y="212" text-anchor="middle" class="c-tick">Jul</text><text x="432.0" y="212" text-anchor="middle" class="c-tick">Aug</text><text x="479.0" y="212" text-anchor="middle" class="c-tick">Sep</text><text x="526.0" y="212" text-anchor="middle" class="c-tick">Oct</text><text x="573.0" y="212" text-anchor="middle" class="c-tick">Nov</text><text x="620.0" y="212" text-anchor="middle" class="c-tick">Dec</text><text x="56.0" y="227" text-anchor="middle" class="c-tick">2010</text><text x="103.0" y="227" text-anchor="middle" class="c-tick">2011</text></svg></div>
-            </figure>
-
-            <dl class="steps">
-              <dt>Recommended</dt>
-              <dd>
-                <ol class="recs">
-                  <li><b>A tiered loyalty or early-access programme for Champions and Loyal customers,</b> tracked by their average recency each quarter and how many stay in the top segment.</li>
-                  <li><b>A low-cost automated win-back email for the 806 lapsed customers</b> instead of full-price marketing, since each is worth only £219 on average. Tracked by orders placed within 90 days against campaign cost.</li>
-                  <li><b>EIRE and Germany as the first markets outside the UK,</b> since their customers already spend 1.3–1.9× more per line. Tracked by revenue per line each quarter against smaller markets.</li>
-                </ol>
-              </dd>
-            </dl>
-            <div class="tags"><span class="tag">Python</span><span class="tag">pandas</span><span class="tag">Power BI</span><span class="tag">RFM segmentation</span><span class="tag">Data quality audit</span><span class="tag">Pareto analysis</span></div>
+            <div class="chart-card">
+              <div class="chart-head"><div><h4>Share of customers vs share of revenue</h4><p class="sub">RFM segments, 4,335 customers.</p></div></div>
+              <div class="chart" id="c-rfm-mini"></div>
+              <div class="legend"><span><i style="background:var(--hue-4)"></i>Customers</span><span><i style="background:var(--hue-7)"></i>Revenue</span></div>
+            </div>
           </div>
-        </article>
+        </div>
 
+        <div class="panel" role="tabpanel" id="r-p2" aria-labelledby="r-t2" hidden>
+          <div class="steps">
+            <div class="step"><h4>Audit all 8 columns</h4><p>Data dictionary and quality audit found 6 issues: 9,288 cancellation rows, 10,624 negative quantities, 135,080 missing customer IDs (24.9%), 2,912 non-product codes, 2,517 zero or negative prices, and 27,386 quantities above the 1.5×IQR fence of 26 units.</p></div>
+            <div class="step"><h4>Flag, don't delete</h4><p>Problem rows were flagged so the cancellation rate (13.5% of orders, £478,724 reversed) could still be reported. Each decision went into a cleaning log.</p></div>
+            <div class="step"><h4>Explore the shape</h4><p>Quantity has a mean of 10.67 but a median of 3, so the median describes a typical order. The UK is 91.7% of lines but has the lowest revenue per line of the top five markets.</p></div>
+            <div class="step"><h4>Segment with RFM</h4><p>Recency, Frequency and Monetary value scored 1–4 by quartile (total 3–12) with a 2011-12-10 snapshot, then grouped into Champions (10–12), Loyal (7–9), At Risk (5–6) and Lost (3–4).</p></div>
+          </div>
+        </div>
+
+        <div class="panel" role="tabpanel" id="r-p3" aria-labelledby="r-t3" hidden>
+          <div class="charts">
+            <div class="chart-card wide">
+              <div class="chart-head">
+                <div><h4>RFM segments</h4><p class="sub" id="rfm-sub">Average spend per customer in each segment.</p></div>
+                <div class="seg-toggle" role="group" aria-label="Measure">
+                  <button type="button" data-m="spend" aria-pressed="true">Avg spend</button>
+                  <button type="button" data-m="recency" aria-pressed="false">Days since last order</button>
+                  <button type="button" data-m="orders" aria-pressed="false">Orders</button>
+                  <button type="button" data-m="revenue" aria-pressed="false">Revenue share</button>
+                </div>
+              </div>
+              <div class="chart" id="c-rfm"></div>
+            </div>
+            <div class="chart-card wide">
+              <div class="chart-head"><div><h4>Monthly revenue</h4><p class="sub">Peaks at £1.46M in November 2011, nearly three times the February low. December 2011 holds only 9 days of data.</p></div></div>
+              <div class="chart" id="c-retail-month"></div>
+            </div>
+            <div class="chart-card">
+              <div class="chart-head"><div><h4>Revenue per transaction line</h4><p class="sub">Top five markets by volume.</p></div></div>
+              <div class="chart" id="c-country"></div>
+            </div>
+            <div class="chart-card">
+              <div class="chart-head"><div><h4>Segment detail</h4><p class="sub">Averages per customer.</p></div></div>
+              <div class="table-wrap">
+                <table class="seg">
+                  <thead><tr><th scope="col">Segment</th><th scope="col">Customers</th><th scope="col">Days</th><th scope="col">Orders</th><th scope="col">Spend</th></tr></thead>
+                  <tbody>
+                    <tr><th scope="row">Champions</th><td>1,265</td><td>19.7</td><td>9.9</td><td>£5,301</td></tr>
+                    <tr><th scope="row">Loyal</th><td>1,272</td><td>61.3</td><td>2.9</td><td>£1,065</td></tr>
+                    <tr><th scope="row">At Risk</th><td>992</td><td>115.0</td><td>1.5</td><td>£528</td></tr>
+                    <tr><th scope="row">Lost / Low</th><td>806</td><td>229.3</td><td>1.1</td><td>£219</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel" role="tabpanel" id="r-p4" aria-labelledby="r-t4" hidden>
+          <div class="recs">
+            <div class="rec"><h4>Reward the customers who carry the business</h4><p>A tiered loyalty or early-access programme for Champions and Loyal customers, who bring in 92.0% of revenue.</p><p class="track"><b>Track:</b> their average recency each quarter and how many stay in the top segment.</p></div>
+            <div class="rec"><h4>Win back lapsed customers cheaply</h4><p>806 customers have not ordered for 229 days on average and are worth £219 each. An automated email campaign fits that value better than full-price marketing.</p><p class="track"><b>Track:</b> orders within 90 days against campaign cost.</p></div>
+            <div class="rec"><h4>Grow in Ireland and Germany next</h4><p>Their customers already spend 1.3–1.9× more per line than UK customers (£34.84 and £23.74 against £18.03).</p><p class="track"><b>Track:</b> revenue per line each quarter against smaller markets.</p></div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ======================= ABOUT ======================= -->
+  <section class="section" id="about" aria-labelledby="h-about">
+    <div class="section-head">
+      <div><span class="eyebrow">Background</span><h2 id="h-about">From floor plans to data</h2></div>
+    </div>
+    <div class="about">
+      <div class="card quote lift">
+        <blockquote>“A drawing is a dataset. I learned to check every number on it before anyone builds from it.”</blockquote>
+        <div class="figs">
+          <div><b>20+</b><span>planning indicators tracked per scheme</span></div>
+          <div><b>4</b><span>live projects at a design institute</span></div>
+        </div>
+      </div>
+      <div class="card about-text">
+        <p>At a design institute I spent much of my time on the numbers behind a building: <strong>floor area ratio, building density, green ratio and parking</strong>. I built Excel sheets to calculate and cross-check these indicators across design schemes, and checked them against government planning conditions.</p>
+        <p>That is the part of architecture I enjoyed most, so I moved into data analytics to do it at a larger scale. I bring an architect's habits with me: <strong>attention to detail, clear visual communication, and practice presenting to clients</strong>.</p>
       </div>
     </div>
   </section>
 
-  <!-- B: background story -->
-  <section class="section" id="story" aria-labelledby="h-story">
-    <div class="axis"><span class="bubble">B</span></div>
-    <div class="body">
-      <h2 id="h-story">From floor plans to data</h2>
-      <div class="story">
-        <p>At a design institute I spent much of my time on the numbers behind a building: floor area ratio, building density, green ratio and parking provision. I built Excel sheets to calculate and cross-check more than 20 of these indicators across design schemes, and checked them against planning regulations.</p>
-        <p>That work taught me to read a drawing as a dataset and to care about whether the figures are right. I moved into data analytics to do that kind of checking and comparing at a larger scale, and I bring an architect's habits with me: attention to detail, clear visual communication, and comfort with presenting to clients.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- C: experience -->
+  <!-- ======================= EXPERIENCE ======================= -->
   <section class="section" id="experience" aria-labelledby="h-exp">
-    <div class="axis"><span class="bubble">C</span></div>
-    <div class="body">
-      <h2 id="h-exp">Experience</h2>
-      <div class="rows">
-        <div class="row">
-          <span class="when">2025.08 – 2025.11</span>
-          <div class="what">
-            <h3>Architectural Design Intern</h3>
-            <span class="org">Zhejiang Urban &amp; Rural Planning Design Institute</span>
-            <p>Built tracking sheets for 20+ technical-economic indicators across design schemes, validated scheme data against government planning conditions, and ran floor-by-floor checks on drawing data for a commercial complex. Worked on 4 live projects, including an international design competition.</p>
-          </div>
+    <div class="section-head">
+      <div><span class="eyebrow">Path so far</span><h2 id="h-exp">Experience &amp; education</h2></div>
+    </div>
+    <div class="two">
+      <div class="card timeline">
+        <h3>Internships</h3>
+        <ol class="tl">
+          <li><span class="when">2025.08 – 2025.11</span><h4>Architectural Design Intern</h4><span class="org">Zhejiang Urban &amp; Rural Planning Design Institute</span><p>Tracked 20+ technical-economic indicators across schemes, validated them against planning conditions, and checked drawing data floor by floor for a commercial complex.</p></li>
+          <li><span class="when">2025.06 – 2025.07</span><h4>Construction Site Intern</h4><span class="org">Zhejiang University Architectural Design &amp; Research Institute</span><p>Collected field data on progress, materials and structure at active sites, including the VIVO Global AI R&amp;D Center, and wrote a 3,000+ word report.</p></li>
+          <li><span class="when">2025.01 – 2025.02</span><h4>New Media Operations Intern</h4><span class="org">Hangzhou Phoenix Career Education Technology</span><p>Produced posters, decks and WeChat articles, and saw how content performance data shaped what the team published next.</p></li>
+          <li><span class="when">2024.07 – 2024.08</span><h4>Architectural Design Intern</h4><span class="org">Zhejiang Urban &amp; Rural Planning Design Institute</span><p>Supported scheme drafting and kept the project's baseline data records.</p></li>
+        </ol>
+      </div>
+      <div class="stack">
+        <div class="card edu">
+          <h3>Education</h3>
+          <div class="school"><span class="eyebrow">2026 – 2028</span><h4>MSc Industrial &amp; Systems Engineering</h4><span class="org">National University of Singapore · Data Analytics track</span><p>Data Analytics for Industrial Engineers, Python for Industrial Systems, Decision Analysis, Stochastic Models, Nonlinear Optimization.</p></div>
+          <div class="school"><span class="eyebrow">2021 – 2026</span><h4>Bachelor of Architecture</h4><span class="org">Zhejiang University</span><p>Engineering Economy and Management, Python Programming, Statistics, Linear Algebra.</p><span class="gpa">GPA 3.77 / 4.0 · last three years 3.85</span></div>
         </div>
-        <div class="row">
-          <span class="when">2025.06 – 2025.07</span>
-          <div class="what">
-            <h3>Construction Site Intern</h3>
-            <span class="org">Zhejiang University Architectural Design &amp; Research Institute</span>
-            <p>Collected field data on construction progress, materials and structural methods at active sites, including the VIVO Global AI R&amp;D Center, and wrote it up in a 3,000+ word report.</p>
-          </div>
-        </div>
-        <div class="row">
-          <span class="when">2025.01 – 2025.02</span>
-          <div class="what">
-            <h3>New Media Operations Intern</h3>
-            <span class="org">Hangzhou Phoenix Career Education Technology</span>
-            <p>Produced posters, slide decks and WeChat articles on a regular schedule, and saw how content performance data shaped what the team published next.</p>
-          </div>
-        </div>
-        <div class="row">
-          <span class="when">2024.07 – 2024.08</span>
-          <div class="what">
-            <h3>Architectural Design Intern</h3>
-            <span class="org">Zhejiang Urban &amp; Rural Planning Design Institute</span>
-            <p>Supported scheme drafting in AutoCAD, SketchUp and Photoshop and kept the project's baseline data records.</p>
-          </div>
+        <div class="card skills">
+          <h3>Toolkit</h3>
+          <div class="skill-group"><div class="k">Data &amp; analysis</div><div class="pills"><span class="pill">SQL (MySQL)</span><span class="pill">Python · pandas</span><span class="pill">Excel</span><span class="pill">RFM segmentation</span></div></div>
+          <div class="skill-group"><div class="k">Visualisation</div><div class="pills"><span class="pill">Tableau</span><span class="pill">Power BI</span><span class="pill">Matplotlib</span></div></div>
+          <div class="skill-group"><div class="k">Modelling</div><div class="pills"><span class="pill">Decision analysis</span><span class="pill">Stochastic models</span><span class="pill">Optimisation</span></div></div>
+          <div class="skill-group"><div class="k">Design</div><div class="pills"><span class="pill">AutoCAD</span><span class="pill">SketchUp</span><span class="pill">Photoshop</span></div></div>
+          <div class="skill-group"><div class="k">Languages</div><div class="pills"><span class="pill">Mandarin (native)</span><span class="pill">English (IELTS 6.5)</span></div></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- D: education -->
-  <section class="section" id="education" aria-labelledby="h-edu">
-    <div class="axis"><span class="bubble">D</span></div>
-    <div class="body">
-      <h2 id="h-edu">Education</h2>
-      <div class="rows">
-        <div class="row">
-          <span class="when">2026.08 – 2028.03</span>
-          <div class="what">
-            <h3>MSc Industrial &amp; Systems Engineering, Data Analytics track</h3>
-            <span class="org">National University of Singapore</span>
-            <p>Data Analytics for Industrial Engineers, Applied Programming for Industrial Systems (Python), Decision Analysis, Stochastic Models, Nonlinear Optimization.</p>
-          </div>
-        </div>
-        <div class="row">
-          <span class="when">2021.09 – 2026.06</span>
-          <div class="what">
-            <h3>Bachelor of Architecture</h3>
-            <span class="org">Zhejiang University</span>
-            <p>GPA 3.77 / 4.0 (3.85 over the last three years). Coursework included Engineering Economy and Management, Python Programming, Statistics and Linear Algebra.</p>
-          </div>
-        </div>
+  <!-- ======================= CONTACT ======================= -->
+  <section class="card contact" id="contact" aria-labelledby="h-contact">
+    <div>
+      <span class="eyebrow">Get in touch</span>
+      <h2 id="h-contact" style="margin-top:8px">Let's talk about your data.</h2>
+      <p>I'm looking for a six-month data analytics, operations or supply chain internship from January 2027. It can be registered as a credit-bearing NUS internship.</p>
+      <p class="sign">— Xiangqi</p>
+    </div>
+    <div class="contact-box">
+      <div class="email-row"><code>chenxiangqi03@gmail.com</code><button class="btn btn-primary" type="button" data-copy="chenxiangqi03@gmail.com">Copy</button></div>
+      <div class="social">
+        <a href="https://www.linkedin.com/in/xiangqi-chen/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com/chenxiangqi03-dot" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://public.tableau.com/app/profile/xiangqi.chen" target="_blank" rel="noopener">Tableau</a>
       </div>
     </div>
   </section>
 
-  <!-- E: skills -->
-  <section class="section" id="skills" aria-labelledby="h-skills">
-    <div class="axis"><span class="bubble">E</span></div>
-    <div class="body">
-      <h2 id="h-skills">Skills</h2>
-      <div class="skills">
-        <div class="skill"><h3>Data &amp; analysis</h3><p>SQL (MySQL): joins, CTEs, window functions. Python: pandas, Matplotlib. Excel.</p></div>
-        <div class="skill"><h3>Visualisation</h3><p>Tableau, Power BI, dashboards and presentation design.</p></div>
-        <div class="skill"><h3>Modelling</h3><p>Decision analysis (decision trees, expected value, EVPI), stochastic models, optimisation.</p></div>
-        <div class="skill"><h3>Design tools</h3><p>AutoCAD, SketchUp, Photoshop, PowerPoint.</p></div>
-        <div class="skill"><h3>Languages</h3><p>Mandarin (native), English (IELTS 6.5).</p></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- F: contact -->
-  <section class="section" id="contact" aria-labelledby="h-contact">
-    <div class="axis"><span class="bubble">F</span></div>
-    <div class="body">
-      <h2 id="h-contact">Contact</h2>
-      <p class="kicker">I'm looking for a six-month data analytics, operations or supply chain internship from January 2027. It can be registered as a credit-bearing NUS internship.</p>
-      <div class="contact">
-        <div class="email">
-          <code id="email-addr">chenxiangqi03@gmail.com</code>
-          <button class="copy" id="copy-email" type="button">Copy email</button>
-        </div>
-        <div class="links" style="margin-top:4px">
-          <a href="https://www.linkedin.com/in/xiangqi-chen/" target="_blank" rel="noopener">LinkedIn</a>
-          <a href="https://github.com/chenxiangqi03-dot" target="_blank" rel="noopener">GitHub</a>
-          <a href="https://public.tableau.com/app/profile/xiangqi.chen" target="_blank" rel="noopener">Tableau Public</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer class="titleblock" aria-label="Page details">
-    <div><span>Project</span>Portfolio of Xiangqi Chen</div>
-    <div><span>Drawn by</span>X. Chen</div>
-    <div><span>Location</span>Singapore</div>
-    <div><span>Date</span>2026.11</div>
-    <div><span>Sheet</span>01 of 01</div>
-  </footer>
-
+  <footer>Xiangqi Chen · Singapore · 2026</footer>
 </div>
 
 <script>
 (function () {
-  var btn = document.getElementById('copy-email');
-  var addr = document.getElementById('email-addr');
-  btn.addEventListener('click', function () {
-    var text = addr.textContent;
-    function selectIt() {
-      var r = document.createRange(); r.selectNodeContents(addr);
-      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
-      btn.textContent = 'Selected, press Ctrl+C';
+  var NS = 'http://www.w3.org/2000/svg';
+  function el(tag, attrs, parent, text) {
+    var e = document.createElementNS(NS, tag);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    if (text != null) e.textContent = text;
+    if (parent) parent.appendChild(e);
+    return e;
+  }
+  function svg(w, h, label) { return el('svg', { viewBox: '0 0 ' + w + ' ' + h, role: 'img', 'aria-label': label }); }
+
+  /* tooltip shared per chart card */
+  function tipFor(host) {
+    var card = host.closest('.chart-card');
+    var t = card.querySelector('.tip');
+    if (!t) { t = document.createElement('div'); t.className = 'tip'; t.style.opacity = '0'; card.appendChild(t); }
+    return {
+      show: function (evt, html) {
+        var r = card.getBoundingClientRect();
+        var x = (evt.touches ? evt.touches[0].clientX : evt.clientX) - r.left;
+        var y = (evt.touches ? evt.touches[0].clientY : evt.clientY) - r.top;
+        t.innerHTML = html; t.style.left = Math.min(Math.max(x, 70), r.width - 70) + 'px'; t.style.top = y + 'px'; t.style.opacity = '1';
+      },
+      hide: function () { t.style.opacity = '0'; }
+    };
+  }
+  function bindTip(node, host, html) {
+    var tip = tipFor(host);
+    node.addEventListener('mousemove', function (e) { tip.show(e, html); });
+    node.addEventListener('mouseleave', tip.hide);
+    node.addEventListener('touchstart', function (e) { tip.show(e, html); }, { passive: true });
+  }
+
+  /* horizontal bar chart */
+  function hbar(id, rows, opts) {
+    var host = document.getElementById(id); if (!host) return;
+    host.innerHTML = '';
+    var W = opts.w || 460, L = opts.left || 120, R = W - 46, rowH = opts.rowH || 30, T = 8;
+    var H = T + rows.length * rowH + 22;
+    var max = opts.max;
+    var s = svg(W, H, opts.label);
+    var x = function (v) { return L + (v / max) * (R - L); };
+    (opts.ticks || []).forEach(function (t) {
+      el('line', { x1: x(t), x2: x(t), y1: T - 2, y2: H - 20, class: 'grid' }, s);
+      el('text', { x: x(t), y: H - 6, 'text-anchor': 'middle' }, s, opts.fmtTick(t));
+    });
+    rows.forEach(function (r, i) {
+      var y = T + i * rowH;
+      el('text', { x: L - 10, y: y + rowH / 2 + 4, 'text-anchor': 'end', class: 'lab' }, s, r.label);
+      var b = el('rect', { x: L, y: y + 6, width: Math.max(2, x(r.v) - L), height: rowH - 12, rx: 5, class: 'bar' + (r.hi ? ' hi' : '') }, s);
+      el('text', { x: x(r.v) + 6, y: y + rowH / 2 + 4, class: 'val' }, s, opts.fmt(r.v));
+      if (r.tip) bindTip(b, host, r.tip);
+    });
+    if (opts.ref != null) {
+      el('line', { x1: x(opts.ref), x2: x(opts.ref), y1: T - 4, y2: H - 20, class: 'ref' }, s);
     }
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(function () { btn.textContent = 'Copied'; }, selectIt);
-    } else { selectIt(); }
-    setTimeout(function () { btn.textContent = 'Copy email'; }, 2500);
+    host.appendChild(s);
+  }
+
+  /* ---------- Olist: states ---------- */
+  var states = [
+    ['Maranhão', 17.43, 717], ['Ceará', 13.76, 1279], ['Bahia', 12.16, 3256], ['Rio de Janeiro', 12.11, 12350],
+    ['Rio Grande do Sul', 6.08, 5344], ['Minas Gerais', 4.57, 11354], ['São Paulo', 4.49, 40494]
+  ];
+  hbar('c-states', states.map(function (d) {
+    return { label: d[0], v: d[1], hi: d[0] === 'Rio de Janeiro', tip: '<b>' + d[0] + '</b><br>' + d[1].toFixed(2) + '% late · ' + d[2].toLocaleString('en') + ' orders' };
+  }), { w: 460, left: 128, max: 20, ticks: [0, 5, 10, 15, 20], ref: 6.77, fmt: function (v) { return v.toFixed(1) + '%'; }, fmtTick: function (t) { return t + '%'; }, label: 'Late rate by state. Maranhão is highest at 17.4 percent; Rio de Janeiro is 12.1 percent against São Paulo at 4.5 percent.' });
+
+  /* ---------- Olist: stars by delay ---------- */
+  var stars = [['On time', 4.29, 89443], ['1–3 days', 3.29, 1852], ['4–7 days', 2.11, 1748], ['8–14 days', 1.67, 1446], ['15+ days', 1.73, 1335]];
+  hbar('c-stars', stars.map(function (d, i) {
+    return { label: d[0], v: d[1], hi: i === 0, tip: '<b>' + d[0] + (i ? ' late' : '') + '</b><br>' + d[1].toFixed(2) + ' stars · ' + d[2].toLocaleString('en') + ' orders' };
+  }), { w: 460, left: 92, max: 5, ticks: [0, 1, 2, 3, 4, 5], fmt: function (v) { return v.toFixed(2) + ' ★'; }, fmtTick: function (t) { return t; }, rowH: 36, label: 'Average review score falls from 4.29 for on-time orders to 2.11 for orders 4 to 7 days late and about 1.7 beyond that.' });
+
+  /* ---------- line + volume chart ---------- */
+  function lineChart(id, data, o) {
+    var host = document.getElementById(id); if (!host) return;
+    var W = 900, L = 56, R = W - (o.vol ? 56 : 24), T = 24, B = 228, H = B + 40;
+    var s = svg(W, H, o.label);
+    var n = data.length, step = (R - L) / n;
+    var cx = function (i) { return L + step * (i + 0.5); };
+    var y = function (v) { return B - (v / o.max) * (B - T); };
+    o.ticks.forEach(function (t) {
+      el('line', { x1: L, x2: R, y1: y(t), y2: y(t), class: 'grid' }, s);
+      el('text', { x: L - 8, y: y(t) + 4, 'text-anchor': 'end' }, s, o.fmtTick(t));
+    });
+    if (o.vol) {
+      var vy = function (v) { return B - (v / o.volMax) * (B - T); };
+      data.forEach(function (d, i) { el('rect', { x: cx(i) - step * 0.36, y: vy(d.vol), width: step * 0.72, height: B - vy(d.vol), rx: 4, class: 'vol' }, s); });
+      [0, o.volMax / 2, o.volMax].forEach(function (t) { el('text', { x: R + 8, y: vy(t) + 4 }, s, (t / 1000) + 'K'); });
+    }
+    var full = data.filter(function (d) { return !d.partial; });
+    if (o.area) {
+      var a = 'M' + cx(0) + ',' + B + ' ' + full.map(function (d, i) { return 'L' + cx(i) + ',' + y(d.v); }).join(' ') + ' L' + cx(full.length - 1) + ',' + B + 'Z';
+      el('path', { d: a, class: 'area' }, s);
+    }
+    el('polyline', { points: full.map(function (d, i) { return cx(i) + ',' + y(d.v); }).join(' '), class: 'line' }, s);
+    data.forEach(function (d, i) {
+      if (d.partial) el('line', { x1: cx(i - 1), y1: y(data[i - 1].v), x2: cx(i), y2: y(d.v), class: 'partial' }, s);
+      el('circle', { cx: cx(i), cy: y(d.v), r: d.hi ? 5.5 : 3.5, class: 'dot' + (d.hi ? ' hi' : '') }, s);
+      if (d.hi) el('text', { x: cx(i), y: y(d.v) - 12, 'text-anchor': 'middle', class: 'val' }, s, o.fmtHi(d));
+      if (d.tick) el('text', { x: cx(i), y: B + 18, 'text-anchor': 'middle' }, s, d.tick);
+      if (d.year) el('text', { x: cx(i), y: B + 33, 'text-anchor': 'middle' }, s, d.year);
+      var hit = el('rect', { x: cx(i) - step / 2, y: T - 10, width: step, height: B - T + 10, class: 'hit' }, s);
+      bindTip(hit, host, o.tip(d));
+    });
+    host.appendChild(s);
+  }
+
+  var mon = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  var om = [[750, 2.93], [1653, 2.96], [2546, 4.56], [2303, 6.56], [3545, 2.99], [3135, 3.03], [3872, 2.79], [4193, 2.91], [4150, 4.39], [4478, 4.18], [7288, 12.40], [5513, 7.46],
+            [7069, 5.70], [6555, 14.13], [7003, 18.96], [6798, 4.50], [6749, 6.56], [6096, 1.16], [6156, 3.38], [6351, 6.19]];
+  lineChart('c-olist-month', om.map(function (d, i) {
+    var m = i % 12, yr = i < 12 ? 2017 : 2018;
+    return { v: d[1], vol: d[0], name: mon[m] + ' ' + yr, tick: (m % 2 === 0) ? mon[m] : '', year: m === 0 ? String(yr) : '', hi: (i === 10 || i === 14) };
+  }), { max: 20, ticks: [0, 5, 10, 15, 20], fmtTick: function (t) { return t + '%'; }, vol: true, volMax: 8000,
+        fmtHi: function (d) { return d.name.replace(' 20', " '") + ': ' + d.v.toFixed(1) + '%'; },
+        tip: function (d) { return '<b>' + d.name + '</b><br>' + d.v.toFixed(2) + '% late · ' + d.vol.toLocaleString('en') + ' orders'; },
+        label: 'Monthly late rate, January 2017 to August 2018, with order volume. Peaks at 12.4 percent in November 2017 and 19.0 percent in March 2018.' });
+
+  /* ---------- Retail: monthly revenue ---------- */
+  var rm = [778008, 671992, 508953, 691266, 516310, 741276, 738877, 689398, 725605, 1030500, 1106686, 1457746, 615502];
+  var rmNames = ['Dec 2010', 'Jan 2011', 'Feb 2011', 'Mar 2011', 'Apr 2011', 'May 2011', 'Jun 2011', 'Jul 2011', 'Aug 2011', 'Sep 2011', 'Oct 2011', 'Nov 2011', 'Dec 2011'];
+  lineChart('c-retail-month', rm.map(function (v, i) {
+    var nm = rmNames[i];
+    return { v: v, name: nm, tick: nm.slice(0, 3), year: (i === 0 || i === 1) ? nm.slice(4) : '', hi: i === 11 || i === 2, partial: i === 12 };
+  }), { max: 1600000, ticks: [0, 400000, 800000, 1200000, 1600000], fmtTick: function (t) { return '£' + (t / 1e6).toFixed(1) + 'M'; }, area: true,
+        fmtHi: function (d) { return d.name.slice(0, 3) + ': £' + (d.v / 1e6).toFixed(2) + 'M'; },
+        tip: function (d) { return '<b>' + d.name + '</b><br>£' + Math.round(d.v).toLocaleString('en') + (d.partial ? '<br>9 days of data only' : ''); },
+        label: 'Monthly revenue, December 2010 to December 2011. Low of 0.51 million pounds in February, peak of 1.46 million in November.' });
+
+  /* ---------- Retail: country ---------- */
+  var ctry = [['Ireland (EIRE)', 34.84, 7783], ['Germany', 23.74, 8659], ['Spain', 23.00, 2423], ['France', 22.79, 8100], ['United Kingdom', 18.03, 485188]];
+  hbar('c-country', ctry.map(function (d, i) {
+    return { label: d[0], v: d[1], hi: i < 2, tip: '<b>' + d[0] + '</b><br>£' + d[1].toFixed(2) + ' per line · ' + d[2].toLocaleString('en') + ' lines' };
+  }), { w: 460, left: 116, max: 40, ticks: [0, 10, 20, 30, 40], fmt: function (v) { return '£' + v.toFixed(2); }, fmtTick: function (t) { return '£' + t; }, rowH: 36, label: 'Average revenue per line: Ireland 34.84 pounds, Germany 23.74, United Kingdom 18.03.' });
+
+  /* ---------- Retail: RFM ---------- */
+  var segs = [
+    { n: 'Champions', c: 1265, pc: 29.2, pr: 76.5, rec: 19.7, ord: 9.9, sp: 5301 },
+    { n: 'Loyal', c: 1272, pc: 29.3, pr: 15.5, rec: 61.3, ord: 2.9, sp: 1065 },
+    { n: 'At Risk', c: 992, pc: 22.9, pr: 6.0, rec: 115.0, ord: 1.5, sp: 528 },
+    { n: 'Lost / Low', c: 806, pc: 18.6, pr: 2.0, rec: 229.3, ord: 1.1, sp: 219 }
+  ];
+  /* paired bars: customers vs revenue share */
+  (function () {
+    var host = document.getElementById('c-rfm-mini'); if (!host) return;
+    var W = 460, L = 92, R = W - 50, T = 6, rowH = 46, H = T + segs.length * rowH + 20;
+    var s = svg(W, H, 'Champions are 29.2 percent of customers and 76.5 percent of revenue.');
+    var x = function (v) { return L + v / 80 * (R - L); };
+    [0, 20, 40, 60, 80].forEach(function (t) { el('line', { x1: x(t), x2: x(t), y1: T, y2: H - 20, class: 'grid' }, s); el('text', { x: x(t), y: H - 6, 'text-anchor': 'middle' }, s, t + '%'); });
+    segs.forEach(function (d, i) {
+      var y = T + i * rowH;
+      el('text', { x: L - 10, y: y + 26, 'text-anchor': 'end', class: 'lab' }, s, d.n);
+      var a = el('rect', { x: L, y: y + 8, width: x(d.pc) - L, height: 13, rx: 4, style: 'fill:var(--hue-4)' }, s);
+      el('text', { x: x(d.pc) + 6, y: y + 19 }, s, d.pc + '%');
+      var b = el('rect', { x: L, y: y + 24, width: x(d.pr) - L, height: 13, rx: 4, style: 'fill:var(--hue-7)' }, s);
+      el('text', { x: x(d.pr) + 6, y: y + 35, class: 'val' }, s, d.pr + '%');
+      var html = '<b>' + d.n + '</b><br>' + d.pc + '% of customers · ' + d.pr + '% of revenue';
+      bindTip(a, host, html); bindTip(b, host, html);
+    });
+    host.appendChild(s);
+  })();
+
+  var measures = {
+    spend: { sub: 'Average spend per customer in each segment.', max: 6000, ticks: [0, 2000, 4000, 6000], v: function (d) { return d.sp; }, fmt: function (v) { return '£' + v.toLocaleString('en'); }, ft: function (t) { return '£' + t / 1000 + 'K'; } },
+    recency: { sub: 'Average days since the customer last ordered (snapshot 2011-12-10).', max: 250, ticks: [0, 50, 100, 150, 200, 250], v: function (d) { return d.rec; }, fmt: function (v) { return v.toFixed(1) + ' days'; }, ft: function (t) { return t; } },
+    orders: { sub: 'Average number of orders per customer.', max: 10, ticks: [0, 2, 4, 6, 8, 10], v: function (d) { return d.ord; }, fmt: function (v) { return v.toFixed(1); }, ft: function (t) { return t; } },
+    revenue: { sub: 'Share of identified-customer revenue.', max: 80, ticks: [0, 20, 40, 60, 80], v: function (d) { return d.pr; }, fmt: function (v) { return v + '%'; }, ft: function (t) { return t + '%'; } }
+  };
+  function drawRfm(key) {
+    var m = measures[key];
+    document.getElementById('rfm-sub').textContent = m.sub;
+    hbar('c-rfm', segs.map(function (d, i) {
+      return { label: d.n, v: m.v(d), hi: i === 0, tip: '<b>' + d.n + '</b> · ' + d.c.toLocaleString('en') + ' customers<br>£' + d.sp.toLocaleString('en') + ' spend · ' + d.ord + ' orders · ' + d.rec + ' days' };
+    }), { w: 900, left: 110, max: m.max, ticks: m.ticks, fmt: m.fmt, fmtTick: m.ft, rowH: 40, label: 'RFM segments: ' + m.sub });
+  }
+  drawRfm('spend');
+  document.querySelectorAll('.seg-toggle button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      document.querySelectorAll('.seg-toggle button').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      drawRfm(b.getAttribute('data-m'));
+    });
+  });
+
+  /* ---------- tabs ---------- */
+  document.querySelectorAll('[data-tabs]').forEach(function (card) {
+    var tabs = Array.prototype.slice.call(card.querySelectorAll('[role="tab"]'));
+    function select(t, focus) {
+      tabs.forEach(function (x) {
+        var on = x === t;
+        x.setAttribute('aria-selected', on ? 'true' : 'false');
+        x.tabIndex = on ? 0 : -1;
+        var p = document.getElementById(x.getAttribute('aria-controls'));
+        p.hidden = !on;
+        if (on) { p.classList.remove('panel-in'); void p.offsetWidth; p.classList.add('panel-in'); }
+      });
+      if (focus) t.focus();
+    }
+    tabs.forEach(function (t, i) {
+      t.addEventListener('click', function () { select(t); });
+      t.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+          e.preventDefault();
+          var j = (i + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
+          select(tabs[j], true);
+        }
+      });
+    });
+  });
+
+  /* ---------- scroll spy ---------- */
+  var links = Array.prototype.slice.call(document.querySelectorAll('.nav-links a'));
+  var targets = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });
+  function spy() {
+    var y = window.scrollY + 140, cur = -1;
+    targets.forEach(function (t, i) { if (t && t.offsetTop <= y) cur = i; });
+    links.forEach(function (a, i) { a.classList.toggle('active', i === cur); });
+  }
+  window.addEventListener('scroll', spy, { passive: true }); spy();
+
+  /* ---------- copy email ---------- */
+  document.querySelectorAll('[data-copy]').forEach(function (b) {
+    var label = b.textContent;
+    b.addEventListener('click', function () {
+      var text = b.getAttribute('data-copy');
+      function done(msg) { b.textContent = msg; setTimeout(function () { b.textContent = label; }, 2200); }
+      function fallback() {
+        var code = document.querySelector('.email-row code');
+        var r = document.createRange(); r.selectNodeContents(code);
+        var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+        code.scrollIntoView({ block: 'center' });
+        done('Press Ctrl+C');
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () { done('Copied ✓'); }, fallback);
+      } else { fallback(); }
+    });
   });
 })();
 </script>
