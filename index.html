@@ -175,6 +175,37 @@ p { margin: 0; }
 .tag { font-family: var(--f-mono); font-size: 0.76rem; padding: 2px 8px; background: var(--accent-soft); color: var(--ink); }
 .project-links { display: flex; flex-wrap: wrap; gap: 8px 20px; font-family: var(--f-display); font-weight: 600; font-stretch: 90%; }
 
+
+/* ---------- charts and tables inside projects ---------- */
+.chart { margin: 4px 0 0; display: grid; gap: 10px; }
+.chart figcaption { font-size: 0.95rem; color: var(--ink-soft); max-width: 62ch; }
+.chart figcaption b { color: var(--ink); font-weight: 600; }
+.chart-box { overflow-x: auto; }
+.chart-box svg { display: block; width: 100%; min-width: 460px; height: auto; font-family: var(--f-mono); }
+.c-lab { font-size: 12px; fill: var(--ink); font-family: var(--f-display); }
+.c-val { font-size: 11px; fill: var(--ink-soft); }
+.c-strong { fill: var(--ink); font-weight: 500; }
+.c-key { font-size: 11px; fill: var(--ink-soft); }
+.c-tick { font-size: 10.5px; fill: var(--ink-soft); }
+.c-grid { stroke: var(--line); stroke-width: 1; }
+.c-cust { fill: var(--line); }
+.c-rev { fill: var(--accent); }
+.c-line { fill: none; stroke: var(--accent); stroke-width: 2.25; stroke-linejoin: round; }
+.c-area { fill: var(--accent-soft); stroke: none; }
+.c-partial { stroke: var(--accent); stroke-width: 1.5; stroke-dasharray: 4 4; }
+.c-open { fill: var(--sheet); stroke: var(--accent); stroke-width: 1.5; }
+.c-dot { fill: var(--accent); }
+.c-hot { fill: var(--mark); }
+.table-wrap { overflow-x: auto; }
+.seg { width: 100%; min-width: 520px; border-collapse: collapse; font-size: 0.9rem; font-variant-numeric: tabular-nums; }
+.seg th, .seg td { padding: 8px 10px; text-align: right; border-bottom: 1px solid var(--line); }
+.seg thead th { font-family: var(--f-mono); font-size: 0.72rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-soft); border-bottom: 1px solid var(--ink); vertical-align: bottom; }
+.seg th:first-child { text-align: left; padding-left: 0; }
+.seg tbody th { font-family: var(--f-display); font-weight: 600; }
+.seg tbody tr:first-child th, .seg tbody tr:first-child td { color: var(--accent); }
+.recs { margin: 0; padding-left: 1.2em; display: grid; gap: 8px; }
+.recs b { font-weight: 600; }
+
 /* ---------- story ---------- */
 .story { margin-top: 18px; display: grid; gap: 14px; max-width: 64ch; }
 
@@ -307,25 +338,62 @@ p { margin: 0; }
         <article class="project">
           <div class="project-head">
             <h3>Which customers, products and markets should an online retailer prioritise?</h3>
-            <div class="meta"><span>UK online retailer · Dec 2010–Dec 2011 data</span><span>NUS IE5005 course project · Oct 2026</span></div>
+            <div class="meta"><span>UK online gift retailer · Dec 2010–Dec 2011 data</span><span>NUS IE5005 course project · Oct 2026</span></div>
           </div>
           <div class="figures">
-            <div class="fig"><span class="v">541,909</span><span class="k">transaction rows audited and cleaned</span></div>
+            <div class="fig"><span class="v">541,909</span><span class="k">transaction rows audited across 8 columns and 38 countries</span></div>
             <div class="fig"><span class="v hot">29.2%</span><span class="k">of customers (Champions) bring in 76.5% of identified-customer revenue</span></div>
-            <div class="fig"><span class="v">13.5%</span><span class="k">of orders cancelled, reversing £478,724</span></div>
+            <div class="fig"><span class="v">£5,301</span><span class="k">average spend per Champion, about 24× a lapsed customer (£219)</span></div>
           </div>
           <div class="project-body">
             <dl class="steps">
+              <dt>Audited</dt>
+              <dd>Built a data dictionary and a quality audit for all 8 columns, and found 6 issues with row counts: 9,288 cancellation rows, 10,624 negative quantities, 135,080 missing customer IDs (24.9%), 2,912 non-product codes such as POST and BANK CHARGES, 2,517 zero or negative prices, and 27,386 quantity outliers above the 1.5×IQR fence of 26 units.</dd>
               <dt>Cleaned</dt>
-              <dd>Found six data-quality issues, including cancellations, returns, non-product codes and 24.9% missing customer IDs, and logged a decision for each one rather than deleting rows silently.</dd>
-              <dt>Analysed</dt>
-              <dd>RFM segmentation of 4,335 customers in pandas, plus Pareto, scatter, distribution and trend charts in Power BI.</dd>
-              <dt>Found</dt>
-              <dd>Champions and Loyal customers are 58.5% of customers but 92.0% of revenue. EIRE and Germany earn £34.84 and £23.74 per transaction line, against £18.03 in the UK.</dd>
-              <dt>Recommended</dt>
-              <dd>A loyalty programme for top segments, a low-cost automated win-back campaign for lapsed customers, and EIRE and Germany as the first markets outside the UK.</dd>
+              <dd>Flagged problem rows instead of deleting them, so the cancellation rate (13.5% of orders, £478,724 reversed) could still be reported. Every decision went into a cleaning log. The result: 528,957 genuine sale lines worth £10.27M.</dd>
+              <dt>Explored</dt>
+              <dd>Quantity has a mean of 10.67 but a median of 3, so I used the median as the typical order. The UK is 91.7% of lines but has the lowest revenue per line of the top five markets (£18.03, against £34.84 in EIRE and £23.74 in Germany).</dd>
+              <dt>Segmented</dt>
+              <dd>Scored 4,335 customers on Recency, Frequency and Monetary value by quartile (1–4 each, total 3–12) in pandas, using 2011-12-10 as the snapshot date, and grouped them into four segments.</dd>
             </dl>
-            <div class="tags"><span class="tag">Python</span><span class="tag">pandas</span><span class="tag">Power BI</span><span class="tag">RFM segmentation</span><span class="tag">Data cleaning</span></div>
+
+            <figure class="chart">
+              <figcaption><b>Revenue is concentrated in a small group of customers.</b> Champions and Loyal customers are 58.5% of customers but 92.0% of revenue.</figcaption>
+              <div class="chart-box"><svg viewBox="0 0 640 240" role="img" aria-label="Share of customers and share of revenue by RFM segment. Champions are 29.2 percent of customers and 76.5 percent of revenue.">
+<rect x="150" y="10" width="11" height="11" class="c-cust"/><text x="167" y="20" class="c-key">Share of customers</text>
+<rect x="320" y="10" width="11" height="11" class="c-rev"/><text x="337" y="20" class="c-key">Share of revenue</text>
+<line x1="150.0" x2="150.0" y1="40" y2="216" class="c-grid"/><text x="150.0" y="230" text-anchor="middle" class="c-tick">0%</text><line x1="262.5" x2="262.5" y1="40" y2="216" class="c-grid"/><text x="262.5" y="230" text-anchor="middle" class="c-tick">20%</text><line x1="375.0" x2="375.0" y1="40" y2="216" class="c-grid"/><text x="375.0" y="230" text-anchor="middle" class="c-tick">40%</text><line x1="487.5" x2="487.5" y1="40" y2="216" class="c-grid"/><text x="487.5" y="230" text-anchor="middle" class="c-tick">60%</text><line x1="600.0" x2="600.0" y1="40" y2="216" class="c-grid"/><text x="600.0" y="230" text-anchor="middle" class="c-tick">80%</text><text x="138" y="59" text-anchor="end" class="c-lab">Champions</text><rect x="150" y="46" width="164.2" height="11" class="c-cust"/><text x="320.2" y="56" class="c-val">29.2%</text><rect x="150" y="60" width="430.3" height="11" class="c-rev"/><text x="586.3" y="70" class="c-val c-strong">76.5%</text><text x="138" y="103" text-anchor="end" class="c-lab">Loyal Customers</text><rect x="150" y="90" width="164.8" height="11" class="c-cust"/><text x="320.8" y="100" class="c-val">29.3%</text><rect x="150" y="104" width="87.2" height="11" class="c-rev"/><text x="243.2" y="114" class="c-val c-strong">15.5%</text><text x="138" y="147" text-anchor="end" class="c-lab">At Risk</text><rect x="150" y="134" width="128.8" height="11" class="c-cust"/><text x="284.8" y="144" class="c-val">22.9%</text><rect x="150" y="148" width="33.8" height="11" class="c-rev"/><text x="189.8" y="158" class="c-val c-strong">6.0%</text><text x="138" y="191" text-anchor="end" class="c-lab">Lost / Low Value</text><rect x="150" y="178" width="104.6" height="11" class="c-cust"/><text x="260.6" y="188" class="c-val">18.6%</text><rect x="150" y="192" width="11.2" height="11" class="c-rev"/><text x="167.2" y="202" class="c-val c-strong">2.0%</text></svg></div>
+            </figure>
+
+            <div class="table-wrap">
+              <table class="seg">
+                <thead><tr><th scope="col">Segment</th><th scope="col">RFM score</th><th scope="col">Customers</th><th scope="col">Days since last order</th><th scope="col">Orders</th><th scope="col">Avg spend</th></tr></thead>
+                <tbody>
+                  <tr><th scope="row">Champions</th><td>10–12</td><td>1,265</td><td>19.7</td><td>9.9</td><td>£5,301</td></tr>
+                  <tr><th scope="row">Loyal Customers</th><td>7–9</td><td>1,272</td><td>61.3</td><td>2.9</td><td>£1,065</td></tr>
+                  <tr><th scope="row">At Risk</th><td>5–6</td><td>992</td><td>115.0</td><td>1.5</td><td>£528</td></tr>
+                  <tr><th scope="row">Lost / Low Value</th><td>3–4</td><td>806</td><td>229.3</td><td>1.1</td><td>£219</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <figure class="chart">
+              <figcaption><b>Sales build towards the holiday season.</b> Monthly revenue nearly triples from the February low to the November peak. December 2011 is incomplete because the data ends on 9 December.</figcaption>
+              <div class="chart-box"><svg viewBox="0 0 640 236" role="img" aria-label="Monthly revenue, December 2010 to December 2011. Revenue peaks at 1.46 million pounds in November 2011; the February low is 0.51 million.">
+<line x1="56" x2="620" y1="196.0" y2="196.0" class="c-grid"/><text x="48" y="200.0" text-anchor="end" class="c-tick">£0.0M</text><line x1="56" x2="620" y1="153.0" y2="153.0" class="c-grid"/><text x="48" y="157.0" text-anchor="end" class="c-tick">£0.4M</text><line x1="56" x2="620" y1="110.0" y2="110.0" class="c-grid"/><text x="48" y="114.0" text-anchor="end" class="c-tick">£0.8M</text><line x1="56" x2="620" y1="67.0" y2="67.0" class="c-grid"/><text x="48" y="71.0" text-anchor="end" class="c-tick">£1.2M</text><line x1="56" x2="620" y1="24.0" y2="24.0" class="c-grid"/><text x="48" y="28.0" text-anchor="end" class="c-tick">£1.6M</text><path d="M56.0,196 L56.0,112.4 L103.0,123.8 L150.0,141.3 L197.0,121.7 L244.0,140.5 L291.0,116.3 L338.0,116.6 L385.0,121.9 L432.0,118.0 L479.0,85.2 L526.0,77.0 L573.0,39.3 L573.0,196 Z" class="c-area"/><polyline points="56.0,112.4 103.0,123.8 150.0,141.3 197.0,121.7 244.0,140.5 291.0,116.3 338.0,116.6 385.0,121.9 432.0,118.0 479.0,85.2 526.0,77.0 573.0,39.3" class="c-line"/><line x1="573.0" y1="39.3" x2="620.0" y2="129.8" class="c-partial"/><circle cx="620.0" cy="129.8" r="3.5" class="c-open"/><text x="616.0" y="147.8" text-anchor="end" class="c-tick">9 days only</text><circle cx="150.0" cy="141.3" r="3.5" class="c-dot"/><text x="150.0" y="159.3" text-anchor="middle" class="c-val">Feb: £0.51M</text><circle cx="573.0" cy="39.3" r="4.5" class="c-hot"/><text x="565.0" y="30.3" text-anchor="end" class="c-val c-strong">Nov 2011: £1.46M</text><text x="56.0" y="212" text-anchor="middle" class="c-tick">Dec</text><text x="103.0" y="212" text-anchor="middle" class="c-tick">Jan</text><text x="150.0" y="212" text-anchor="middle" class="c-tick">Feb</text><text x="197.0" y="212" text-anchor="middle" class="c-tick">Mar</text><text x="244.0" y="212" text-anchor="middle" class="c-tick">Apr</text><text x="291.0" y="212" text-anchor="middle" class="c-tick">May</text><text x="338.0" y="212" text-anchor="middle" class="c-tick">Jun</text><text x="385.0" y="212" text-anchor="middle" class="c-tick">Jul</text><text x="432.0" y="212" text-anchor="middle" class="c-tick">Aug</text><text x="479.0" y="212" text-anchor="middle" class="c-tick">Sep</text><text x="526.0" y="212" text-anchor="middle" class="c-tick">Oct</text><text x="573.0" y="212" text-anchor="middle" class="c-tick">Nov</text><text x="620.0" y="212" text-anchor="middle" class="c-tick">Dec</text><text x="56.0" y="227" text-anchor="middle" class="c-tick">2010</text><text x="103.0" y="227" text-anchor="middle" class="c-tick">2011</text></svg></div>
+            </figure>
+
+            <dl class="steps">
+              <dt>Recommended</dt>
+              <dd>
+                <ol class="recs">
+                  <li><b>A tiered loyalty or early-access programme for Champions and Loyal customers,</b> tracked by their average recency each quarter and how many stay in the top segment.</li>
+                  <li><b>A low-cost automated win-back email for the 806 lapsed customers</b> instead of full-price marketing, since each is worth only £219 on average. Tracked by orders placed within 90 days against campaign cost.</li>
+                  <li><b>EIRE and Germany as the first markets outside the UK,</b> since their customers already spend 1.3–1.9× more per line. Tracked by revenue per line each quarter against smaller markets.</li>
+                </ol>
+              </dd>
+            </dl>
+            <div class="tags"><span class="tag">Python</span><span class="tag">pandas</span><span class="tag">Power BI</span><span class="tag">RFM segmentation</span><span class="tag">Data quality audit</span><span class="tag">Pareto analysis</span></div>
           </div>
         </article>
 
